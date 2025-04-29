@@ -1,0 +1,39 @@
+# Flutter general
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-versions
+.melos_tool/
+*.iml
+
+# Ignore non-Android platforms
+ios/
+macos/
+web/
+windows/
+linux/
+
+# Android specific
+android/.gradle/
+android/captures/
+android/local.properties
+android/.idea/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code
+.vscode/
+
+# macOS specific
+.DS_Store
+
+# Windows specific
+Thumbs.db
