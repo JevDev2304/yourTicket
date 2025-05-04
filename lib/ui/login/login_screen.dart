@@ -34,7 +34,7 @@ class LoginScreen extends StatelessWidget {
             TextFormField(
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                labelText: 'Email Address',
+                labelText: 'Username',
                 filled: true, // Habilita el llenado del fondo
                 fillColor: Colors.white, // Establece el color de fondo a blanco
                 border: const OutlineInputBorder(),

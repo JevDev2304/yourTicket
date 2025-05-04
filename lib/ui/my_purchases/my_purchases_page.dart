@@ -15,7 +15,11 @@ class MyPurchasesPage extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.white),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        title: const Text('My Purchases'),
+        foregroundColor: Colors.white,
+      ),
       body: ListView.builder(
         itemCount: compras.length,
         itemBuilder: (context, index) {
