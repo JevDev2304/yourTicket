@@ -13,6 +13,7 @@ class MainScaffold extends StatelessWidget {
     if (location.startsWith('/home')) return 0;
     if (location.startsWith('/my_purchases')) return 1;
     if (location.startsWith('/profile')) return 2;
+    if (location.startsWith('/categories')) return 3;
     return 0;
   }
 
@@ -26,6 +27,9 @@ class MainScaffold extends StatelessWidget {
         break;
       case 2:
         context.go('/profile');
+        break;
+      case 3:
+        context.go('/categories');
         break;
     }
   }
@@ -42,11 +46,18 @@ class MainScaffold extends StatelessWidget {
         backgroundColor: Colors.white,
         iconSize: 28,
         selectedItemColor: primarySwatch[500],
+        unselectedItemColor: primarySwatch[300],
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag_rounded), label: 'My purchases'),
+            icon: Icon(Icons.shopping_bag_rounded),
+            label: 'My purchases',
+          ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: 'Categories',
+          ),
         ],
       ),
     );

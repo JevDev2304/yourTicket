@@ -1,13 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tickets_app/ui/categories/categories_screen.dart';
 import 'package:tickets_app/ui/home/home_screen.dart';
 import 'package:tickets_app/ui/my_purchases/my_purchases_page.dart';
 import 'package:tickets_app/ui/navigation/widgets/main_scaffold.dart';
 import 'package:tickets_app/ui/payment/payment_page.dart';
 import 'package:tickets_app/ui/payment_confirmation/payment_confirmation_page.dart';
+import 'package:tickets_app/ui/login/login_screen.dart';
+import 'package:tickets_app/ui/profile/profile_screen.dart';
+import 'package:tickets_app/ui/register/register_screen.dart';
 
-final GoRouter router = GoRouter(initialLocation: '/home', routes: [
-  ShellRoute(
+final GoRouter router = GoRouter(
+  initialLocation: '/login',
+  routes: [
+    GoRoute(
+      path: '/login',
+      name: 'login',
+      builder: (BuildContext context, GoRouterState state) {
+        return const LoginScreen();
+      },
+    ),
+    GoRoute(
+      path: '/register',
+      name: 'register',
+      builder: (BuildContext context, GoRouterState state) {
+        return const RegisterScreen();
+      },
+    ),
+    ShellRoute(
       builder: (context, state, child) {
         return MainScaffold(child: child);
       },
@@ -40,8 +60,33 @@ final GoRouter router = GoRouter(initialLocation: '/home', routes: [
             return PaymentConfirmationPage();
           },
         ),
-      ]),
-]);
+        GoRoute(
+          path: '/categories',
+          name: 'categories',
+          builder: (BuildContext context, GoRouterState state) {
+            return CategoriesScreen();
+          },
+        ),
+        GoRoute(
+          path: '/profile',
+          name: 'profile',
+          builder: (BuildContext context, GoRouterState state) {
+            return ProfileScreen();
+          },
+        ),
+
+        //GoRoute(
+        //path: '/profile/:id', // Define la ruta con el parámetro :id
+        //name: 'profile',
+        //builder: (BuildContext context, GoRouterState state) {
+        //final String? userId = state.pathParameters['id']; // Obtén el valor del parámetro 'id'
+        //return ProfileScreen(userId: userId); // Pasa el ID a tu ProfileScreen
+        //},
+        //),
+      ],
+    ),
+  ],
+);
         // routes: [
         //   GoRoute(
         //     path: '/recipeDetail/:id',
