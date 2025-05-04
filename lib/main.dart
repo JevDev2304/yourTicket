@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tickets_app/ui/navigation/routes.dart';
 import 'ui/payment/payment_page.dart';
 import 'ui/my_purchases/my_purchases_page.dart';
 import 'ui/payment_confirmation/payment_confirmation_page.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'YourTicket',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFfcd240)),
@@ -41,12 +42,13 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/payment',
-      routes: {
-        '/payment': (context) => PaymentPage(),
-        '/my_purchases': (context) => const MyPurchasesPage(),
-        '/confirmation': (context) => const PaymentConfirmationPage(),
-      },
+      routerConfig: router,
     );
   }
 }
+      // initialRoute: '/payment',
+      // routes: {
+      //   '/payment': (context) => PaymentPage(),
+      //   '/my_purchases': (context) => const MyPurchasesPage(),
+      //   '/confirmation': (context) => const PaymentConfirmationPage(),
+      // },
