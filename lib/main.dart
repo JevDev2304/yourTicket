@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tickets_app/theme/colors.dart';
 import 'package:tickets_app/ui/navigation/routes.dart';
 
 void main() {
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'YourTicket',
       theme: ThemeData(
+        primarySwatch: primarySwatch,
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFfcd240)),
         primaryColor: Color(0xFFfcd240),
         textTheme: GoogleFonts.urbanistTextTheme(),
