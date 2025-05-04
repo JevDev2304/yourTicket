@@ -35,8 +35,8 @@ class LoginScreen extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: 'Username',
-                filled: true, // Habilita el llenado del fondo
-                fillColor: Colors.white, // Establece el color de fondo a blanco
+                filled: true,
+                fillColor: Colors.white,
                 border: const OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Theme.of(context).primaryColor),
@@ -48,8 +48,8 @@ class LoginScreen extends StatelessWidget {
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
-                filled: true, // Habilita el llenado del fondo
-                fillColor: Colors.white, // Establece el color de fondo a blanco
+                filled: true,
+                fillColor: Colors.white,
                 border: const OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Theme.of(context).primaryColor),
@@ -76,17 +76,10 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(width: 16),
                 Expanded(
                   child: ElevatedButton(
-                    // Usamos ElevatedButton para la misma forma
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Colors.white, // Fondo blanco para el botón Sign Up
-                      foregroundColor:
-                          Theme.of(
-                            context,
-                          ).primaryColor, // Texto con tu color primario
-                      side: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                      ), // Borde con tu color primario
+                      backgroundColor: Colors.white,
+                      foregroundColor: Theme.of(context).primaryColor,
+                      side: BorderSide(color: Theme.of(context).primaryColor),
                     ),
                     onPressed: () {
                       context.go('/register');

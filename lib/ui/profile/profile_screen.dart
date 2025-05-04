@@ -15,8 +15,7 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start, // Align text to the left
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Center(
               child: SizedBox(
@@ -105,10 +104,7 @@ class ProfileScreen extends StatelessWidget {
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () {
-                      // Lógica para cambiar la contraseña
                       print('Change Password Pressed');
-                      // Puedes navegar a una pantalla de cambio de contraseña aquí
-                      // context.go('/change_password');
                     },
                     child: const Text('Change Password'),
                   ),
@@ -122,8 +118,6 @@ class ProfileScreen extends StatelessWidget {
                       side: BorderSide(color: Theme.of(context).primaryColor),
                     ),
                     onPressed: () {
-                      // Lógica para cerrar sesión
-                      print('Logout Pressed');
                       context.go('/login');
                     },
                     child: const Text('Logout'),
