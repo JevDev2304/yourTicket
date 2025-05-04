@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tickets_app/ui/navigation/routes.dart';
-import 'ui/payment/payment_page.dart';
-import 'ui/my_purchases/my_purchases_page.dart';
-import 'ui/payment_confirmation/payment_confirmation_page.dart';
-import 'theme/colors.dart';
 
 void main() {
   runApp(const MyApp());
