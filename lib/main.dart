@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'payment_page.dart';
-import 'my_purchases_page.dart';
-import 'payment_confirmation_page.dart';
-
+import 'package:google_fonts/google_fonts.dart';
+import 'ui/payment/payment_page.dart';
+import 'ui/my_purchases/my_purchases_page.dart';
+import 'ui/payment_confirmation/payment_confirmation_page.dart';
+import 'theme/colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,28 +17,29 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'YourTicket',
       theme: ThemeData(
-  colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF5E35B1)),
-  primaryColor: Color(0xFF5E35B1),
-  scaffoldBackgroundColor: Colors.white,
-  inputDecorationTheme: InputDecorationTheme(
-    filled: true,
-    fillColor: Color(0xFFF5F5F5),
-    border: OutlineInputBorder(
-      borderSide: BorderSide(color: Color(0xFFE0E0E0)),
-      borderRadius: BorderRadius.circular(8),
-    ),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Color(0xFF5E35B1),
-      foregroundColor: Colors.white,
-      padding: EdgeInsets.symmetric(vertical: 14, horizontal: 24),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    ),
-  ),
-  useMaterial3: true,
-),
-
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFfcd240)),
+        primaryColor: Color(0xFFfcd240),
+        textTheme: GoogleFonts.urbanistTextTheme(),
+        scaffoldBackgroundColor: Colors.white,
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Color(0xFFF5F5F5),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: Color(0xFFE0E0E0)),
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xFFfcd240),
+            foregroundColor: Colors.white,
+            padding: EdgeInsets.symmetric(vertical: 14, horizontal: 24),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          ),
+        ),
+        useMaterial3: true,
+      ),
       debugShowCheckedModeBanner: false,
       initialRoute: '/payment',
       routes: {
