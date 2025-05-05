@@ -1,49 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:tickets_app/domain/model/event.dart';
+import 'package:tickets_app/ui/home/widgets/event_item.dart';
 import 'package:tickets_app/ui/home/widgets/search_bar_events.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final List<Event> items = [
+    Event(
+      date: DateTime(2025, 12, 12),
+      category: 'Concert',
+      id: 1,
+      name: 'Jazz all night long',
+      imageUrl:
+          'https://images.squarespace-cdn.com/content/v1/62502cbe020d59057d88d958/080907e5-94d6-491d-9c60-3d8099731559/patterns-by-angry-jalebi-62.jpg',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-            child: Padding(
-                padding:
-                    const EdgeInsets.only(left: 16.0, right: 16.0, top: 48.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      spacing: 5,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.local_activity,
-                          color: Theme.of(context).primaryColor,
-                          size: 48,
-                        ),
-                        Text(
-                          'YourTicket',
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Discover unforgettable experiences',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    SearchBarEvents(),
-                    SizedBox(
-                      height: 30,
-                    ),
-                  ],
-                ))));
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 48.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                spacing: 5,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.local_activity,
+                    color: Theme.of(context).primaryColor,
+                    size: 48,
+                  ),
+                  Text(
+                    'YourTicket',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Discover unforgettable experiences',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              SizedBox(height: 30),
+              SearchBarEvents(),
+              SizedBox(height: 50),
+              Text(
+                'Best events for you',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 16,
+                    ), // similar a mainAxisSpacing
+                    child: EventItem(event: items[index]),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

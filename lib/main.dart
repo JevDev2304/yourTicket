@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
       title: 'YourTicket',
       theme: ThemeData(
         primarySwatch: primarySwatch,
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFfcd240)),
-        primaryColor: Color(0xFFfcd240),
-        textTheme: GoogleFonts.urbanistTextTheme(),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF802ef8)),
+        primaryColor: Color(0xFF802ef8),
+        textTheme: GoogleFonts.dmSansTextTheme(),
         scaffoldBackgroundColor: Colors.white,
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
@@ -30,11 +30,12 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFFfcd240),
+            backgroundColor: Color(0xFF802ef8),
             foregroundColor: Colors.white,
             padding: EdgeInsets.symmetric(vertical: 14, horizontal: 24),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
         ),
         useMaterial3: true,
