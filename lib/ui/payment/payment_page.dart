@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 class PaymentPage extends StatelessWidget {
   PaymentPage({super.key});
 
-  final _formKey = GlobalKey<FormState>(); 
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pago del Evento'),
-        backgroundColor: Theme.of(context).primaryColor,
+        title: const Text('Event Payment'),
+        backgroundColor: primaryColor,
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
@@ -18,68 +20,91 @@ class PaymentPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // DETALLES DEL EVENTO
-            Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              elevation: 4,
-              child: Padding(
+            // Styled event ticket
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                image: const DecorationImage(
+                  image: NetworkImage(
+                    'https://images.unsplash.com/photo-1558981009-15c203f1e273',
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              height: 180,
+              child: Container(
                 padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text('Nombre del Evento',
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 4),
-                          Text('Fecha: 25 de mayo, 2025'),
-                          Text('Lugar: Teatro Principal'),
-                        ],
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  gradient: LinearGradient(
+                    colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+                alignment: Alignment.bottomLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Jazz Night at Main Theater',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
-                    )
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'May 25, 2025 • Main Theater',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 14,
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
             const SizedBox(height: 24),
 
-            const Text('Información del Cliente',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            const Text(
+              'Customer Information',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 10),
 
             Form(
               key: _formKey,
               child: Column(
                 children: [
-                  _buildInput('Nombre completo'),
+                  _buildInput('Full Name'),
                   _buildInput('Email', type: TextInputType.emailAddress),
-                  _buildInput('Teléfono', type: TextInputType.phone),
-                  _buildInput('Dirección'),
+                  _buildInput('Phone', type: TextInputType.phone),
+                  _buildInput('Address'),
                   const SizedBox(height: 24),
                   const Align(
                     alignment: Alignment.centerLeft,
-                    child: Text('Método de Pago',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    child: Text(
+                      'Payment Method',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
                   ),
                   const SizedBox(height: 10),
                   DropdownButtonFormField<String>(
                     decoration: const InputDecoration(
-                      labelText: 'Selecciona método de pago',
+                      labelText: 'Select a payment method',
                     ),
                     items: const [
-                      DropdownMenuItem(value: 'credit_card', child: Text('Tarjeta de crédito')),
-                      DropdownMenuItem(value: 'debit_card', child: Text('Tarjeta de débito')),
+                      DropdownMenuItem(value: 'credit_card', child: Text('Credit Card')),
+                      DropdownMenuItem(value: 'debit_card', child: Text('Debit Card')),
                       DropdownMenuItem(value: 'pse', child: Text('PSE')),
                     ],
                     onChanged: (value) {},
                   ),
                   const SizedBox(height: 12),
-                  _buildInput('Número de tarjeta o cuenta', type: TextInputType.number),
+                  _buildInput('Card or Account Number', type: TextInputType.number),
                   _buildInput('ZIP Code', type: TextInputType.number),
                   const SizedBox(height: 30),
                   SizedBox(
@@ -90,9 +115,9 @@ class PaymentPage extends StatelessWidget {
                           Navigator.pushNamed(context, '/confirmation');
                         }
                       },
-                      child: const Text('Confirmar Pago'),
+                      child: const Text('Confirm Payment'),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -108,7 +133,7 @@ class PaymentPage extends StatelessWidget {
       child: TextFormField(
         decoration: InputDecoration(labelText: label),
         keyboardType: type,
-        validator: (value) => value == null || value.isEmpty ? 'Este campo es obligatorio' : null,
+        validator: (value) => value == null || value.isEmpty ? 'This field is required' : null,
       ),
     );
   }
