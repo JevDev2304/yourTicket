@@ -16,7 +16,7 @@ class TicketDetailScreen extends StatelessWidget {
         city: 'London, United Kingdom',
         address: '42 Camden High Street',
         type: 'VIP', // it may be early access, general, or VIP
-        numberOfTickets: 2,
+        purchasedOn: DateTime(2025, 05, 12),
         ticketHolderName: 'Juan Valdés',
       );
 
@@ -27,20 +27,20 @@ class TicketDetailScreen extends StatelessWidget {
     String formattedDate =
         '${ticket.date.month}/${ticket.date.day}/${ticket.date.year}';
 
+    String formattedDatePurchased =
+        '${ticket.purchasedOn.month}/${ticket.purchasedOn.day}/${ticket.purchasedOn.year}';
+
     return Scaffold(
-      extendBodyBehindAppBar: true,
       bottomNavigationBar: BottomActionButton(
         label: 'Download PDF',
         onPressed:
-            () => context.pushNamed(
-              //! TO DO: show a success message
-              'payment',
-              pathParameters: {'id': ticket.id.toString()},
-            ),
+            //! TO DO: show a success message
+            () => {},
       ),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Text('Ticket details'),
+        // elevation: 0,
         leading: Container(
           margin: EdgeInsets.all(8),
           decoration: BoxDecoration(
@@ -56,21 +56,46 @@ class TicketDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                SizedBox(
-                  height: 300,
-                  width: double.infinity,
-                  child: Image.network(ticket.qrImageUrl, fit: BoxFit.cover),
-                ),
-              ],
-            ),
             Padding(
-              padding: EdgeInsets.only(top: 30.0, left: 16, right: 16),
+              padding: EdgeInsets.only(top: 10.0, left: 16, right: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        spacing: 10,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            height: 200,
+                            width: 200,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.grey[300]!),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Center(
+                              child: AspectRatio(
+                                aspectRatio: 1,
+                                child: Image.network(
+                                  ticket.qrImageUrl,
+                                  fit: BoxFit.contain,
+                                  errorBuilder:
+                                      (context, error, stackTrace) =>
+                                          const Icon(Icons.error),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text('Code: ${ticket.code}'),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
                   Text(
                     ticket.name,
                     maxLines: 2,
@@ -136,17 +161,101 @@ class TicketDetailScreen extends StatelessWidget {
                       Tag(label: ticket.category),
                     ],
                   ),
-                  SizedBox(height: 15),
-                  Text(
-                    'Description',
-                    style: Theme.of(context).textTheme.titleLarge,
+                  SizedBox(height: 30),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey[300]!),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Your ticket',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: Icon(Icons.person),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                'Ticket holder:',
+                                style: Theme.of(context).textTheme.bodyLarge
+                                    ?.copyWith(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                ticket.ticketHolderName,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: Icon(Icons.confirmation_num),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                'Entry type:',
+                                style: Theme.of(context).textTheme.bodyLarge
+                                    ?.copyWith(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                ticket.type,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: Icon(Icons.person),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                'Purchased on:',
+                                style: Theme.of(context).textTheme.bodyLarge
+                                    ?.copyWith(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                formattedDatePurchased,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 20),
-                  Text(
-                    ticket.type,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                 ],
               ),
             ),

@@ -8,7 +8,7 @@ class TicketDetailed {
   final String city;
   final String address;
   final String type;
-  final int numberOfTickets;
+  final DateTime purchasedOn;
   final String ticketHolderName;
 
   TicketDetailed({
@@ -21,7 +21,7 @@ class TicketDetailed {
     required this.city,
     required this.address,
     required this.type,
-    required this.numberOfTickets,
+    required this.purchasedOn,
     required this.ticketHolderName,
   });
 }

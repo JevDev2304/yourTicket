@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:tickets_app/domain/model/event.dart';
 import 'package:tickets_app/ui/home/widgets/event_item.dart';
-=======
 import 'package:go_router/go_router.dart';
->>>>>>> 26c314a1bd440c5eb5aef7e219e1e12d350d91ac
+import 'package:tickets_app/ui/my_purchases/widgets/ticket_item.dart';
 
 class MyPurchasesPage extends StatelessWidget {
   const MyPurchasesPage({super.key});
@@ -42,10 +40,7 @@ class MyPurchasesPage extends StatelessWidget {
         ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
-          child: Container(
-            height: 1,
-            color: Colors.grey.shade300,
-          ),
+          child: Container(height: 1, color: Colors.grey.shade300),
         ),
       ),
       backgroundColor: Colors.white,
@@ -53,24 +48,10 @@ class MyPurchasesPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         itemCount: purchases.length,
         itemBuilder: (context, index) {
-<<<<<<< HEAD
           final event = purchases[index];
           return Padding(
             padding: const EdgeInsets.only(bottom: 16),
-            child: EventItem(event: event),
-=======
-          final compra = compras[index];
-          return Card(
-            child: ListTile(
-              onTap: () {
-                context.push('/ticket/1');
-              },
-              title: Text(compra['evento']!),
-              subtitle: Text(
-                'Fecha: ${compra['fecha']!}\nCódigo: ${compra['codigo']!}',
-              ),
-            ),
->>>>>>> 26c314a1bd440c5eb5aef7e219e1e12d350d91ac
+            child: TicketItem(event: event),
           );
         },
       ),
