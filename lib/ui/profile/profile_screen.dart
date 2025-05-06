@@ -97,19 +97,19 @@ class ProfileScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      foregroundColor: Colors.white,
-                    ),
-                    onPressed: () {
-                      print('Change Password Pressed');
-                    },
-                    child: const Text('Change Password'),
-                  ),
-                ),
-                const SizedBox(width: 10),
+                // Expanded(
+                //   child: ElevatedButton(
+                //     style: ElevatedButton.styleFrom(
+                //       backgroundColor: Theme.of(context).primaryColor,
+                //       foregroundColor: Colors.white,
+                //     ),
+                //     onPressed: () {
+                //       print('Change Password Pressed');
+                //     },
+                //     child: const Text('Change Password'),
+                //   ),
+                // ),
+                // const SizedBox(width: 10),
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
