@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tickets_app/domain/model/event_detailed.dart';
 import 'package:tickets_app/ui/widgets/bottom_action_button.dart';
+import 'package:tickets_app/ui/widgets/tag.dart';
 
 class DetailScreen extends StatelessWidget {
   DetailScreen({super.key})
@@ -127,6 +128,18 @@ class DetailScreen extends StatelessWidget {
                           ],
                         ),
                       ),
+                    ],
+                  ),
+                  SizedBox(height: 25),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    spacing: 10,
+                    children: [
+                      Text(
+                        'Category:',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      Tag(label: event.category),
                     ],
                   ),
                   SizedBox(height: 15),

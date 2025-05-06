@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tickets_app/domain/model/event.dart';
+import 'package:tickets_app/ui/widgets/tag.dart';
 
 class EventItem extends StatelessWidget {
   const EventItem({super.key, required this.event});
@@ -72,25 +73,7 @@ class EventItem extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 15),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 3,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(20),
-                      // border: Border.all(
-                      //   color: Theme.of(context).colorScheme.primary,
-                      // ),
-                    ),
-                    child: Text(
-                      event.category,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.labelSmall?.copyWith(color: Colors.white),
-                    ),
-                  ),
+                  Tag(label: event.category),
                   Expanded(child: Container()),
 
                   Align(
