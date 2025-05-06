@@ -46,7 +46,7 @@ class MainScaffold extends StatelessWidget {
         backgroundColor: Colors.white,
         iconSize: 28,
         selectedItemColor: primarySwatch[500],
-        unselectedItemColor: primarySwatch[300],
+        unselectedItemColor: Colors.grey[400],
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
@@ -54,10 +54,6 @@ class MainScaffold extends StatelessWidget {
             label: 'My purchases',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: 'Categories',
-          ),
         ],
       ),
     );
