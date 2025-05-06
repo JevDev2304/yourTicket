@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:developer' as developer;
 import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -22,10 +21,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
-          child: Container(
-            color: Colors.grey.shade300,
-            height: 1,
-          ),
+          child: Container(color: Colors.grey.shade300, height: 1),
         ),
       ),
       backgroundColor: Colors.white,
@@ -52,10 +48,7 @@ class ProfileScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
-            Text(
-              '@JevDev2304',
-              style: TextStyle(color: Colors.grey[600]),
-            ),
+            Text('@JevDev2304', style: TextStyle(color: Colors.grey[600])),
             const SizedBox(height: 32),
 
             // Info Cards
@@ -77,24 +70,24 @@ class ProfileScreen extends StatelessWidget {
             // Buttons
             Row(
               children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    icon: const Icon(Icons.lock_outline),
-                    label: const Text('Change Password'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: primary,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: () {
-                      developer.log('Change Password Pressed');
-                    },
-                  ),
-                ),
-                const SizedBox(width: 12),
+                // Expanded(
+                //   child: ElevatedButton.icon(
+                //     icon: const Icon(Icons.lock_outline),
+                //     label: const Text('Change Password'),
+                //     style: ElevatedButton.styleFrom(
+                //       backgroundColor: primary,
+                //       foregroundColor: Colors.white,
+                //       padding: const EdgeInsets.symmetric(vertical: 14),
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(12),
+                //       ),
+                //     ),
+                //     onPressed: () {
+                //       developer.log('Change Password Pressed');
+                //     },
+                //   ),
+                // ),
+                // const SizedBox(width: 12),
                 Expanded(
                   child: OutlinedButton.icon(
                     icon: const Icon(Icons.logout),
@@ -150,18 +143,14 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    )),
+                Text(
+                  title,
+                  style: const TextStyle(fontSize: 14, color: Colors.grey),
+                ),
                 const SizedBox(height: 4),
                 Text(
                   value,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.black87,
-                  ),
+                  style: const TextStyle(fontSize: 16, color: Colors.black87),
                 ),
               ],
             ),
