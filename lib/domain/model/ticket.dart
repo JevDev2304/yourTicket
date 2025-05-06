@@ -1,15 +1,17 @@
-class Ticket {
+class TicketDetailed {
   final int id;
   final String name;
+  final String type;
+  final String ticketHolderName;
   final DateTime date;
-  final String code;
-  final int numberOfTickets;
+  final String imageUrl; 
 
-  Ticket({
+  TicketDetailed({
     required this.date,
     required this.id,
     required this.name,
-    required this.code,
-    required this.numberOfTickets,
+    required this.type,
+    required this.ticketHolderName,
+    required this.imageUrl, 
   });
 }
