@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tickets_app/domain/model/event.dart';
+import 'package:tickets_app/theme/colors.dart';
 import 'package:tickets_app/ui/home/widgets/event_item.dart';
 import 'package:tickets_app/ui/home/widgets/search_bar_events.dart';
 
@@ -48,11 +50,32 @@ class HomeScreen extends StatelessWidget {
               ),
               SizedBox(height: 30),
               SearchBarEvents(),
-              SizedBox(height: 50),
+              SizedBox(height: 20),
+              GestureDetector(
+                onTap: () => context.push('/categories'),
+                child: Row(
+                  spacing: 8,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Explore our categories',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: primarySwatch),
+                    ),
+                    Icon(
+                      Icons.keyboard_double_arrow_right,
+                      color: primarySwatch,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 30),
               Text(
                 'Best events for you',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
+              SizedBox(height: 5),
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
