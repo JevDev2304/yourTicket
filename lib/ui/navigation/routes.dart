@@ -10,6 +10,7 @@ import 'package:tickets_app/ui/payment_confirmation/payment_confirmation_page.da
 import 'package:tickets_app/ui/login/login_screen.dart';
 import 'package:tickets_app/ui/profile/profile_screen.dart';
 import 'package:tickets_app/ui/register/register_screen.dart';
+import 'package:tickets_app/ui/ticket_detail/ticket_detail_screen.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/login',
@@ -45,6 +46,14 @@ final GoRouter router = GoRouter(
           name: 'my_purchases',
           builder: (BuildContext context, GoRouterState state) {
             return MyPurchasesPage();
+          },
+        ),
+        GoRoute(
+          path: '/ticket/:id',
+          name: 'ticket',
+          builder: (BuildContext context, GoRouterState state) {
+            // final String? userId = state.pathParameters['id'];
+            return TicketDetailScreen();
           },
         ),
         GoRoute(
