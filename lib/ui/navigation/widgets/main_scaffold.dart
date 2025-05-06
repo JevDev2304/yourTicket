@@ -13,7 +13,6 @@ class MainScaffold extends StatelessWidget {
     if (location.startsWith('/home')) return 0;
     if (location.startsWith('/my_purchases')) return 1;
     if (location.startsWith('/profile')) return 2;
-    if (location.startsWith('/categories')) return 3;
     return 0;
   }
 
@@ -27,9 +26,6 @@ class MainScaffold extends StatelessWidget {
         break;
       case 2:
         context.go('/profile');
-        break;
-      case 3:
-        context.go('/categories');
         break;
     }
   }

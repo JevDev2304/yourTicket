@@ -11,39 +11,39 @@ class LoginScreen extends StatelessWidget {
     final primary = theme.primaryColor;
 
     InputDecoration inputStyle(String label) => InputDecoration(
-          labelText: label,
-          labelStyle: const TextStyle(color: Colors.black87),
-          floatingLabelStyle: TextStyle(color: primary),
-          filled: true,
-          fillColor: Colors.white,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: Colors.grey.shade300),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: primary, width: 1.5),
-          ),
-        );
+      labelText: label,
+      labelStyle: const TextStyle(color: Colors.black87),
+      floatingLabelStyle: TextStyle(color: primary),
+      filled: true,
+      fillColor: Colors.white,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: Colors.grey.shade300),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: primary, width: 1.5),
+      ),
+    );
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        foregroundColor: Colors.black,
-        title: const Text('Login'),
-        centerTitle: true,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(
-            color: Colors.grey.shade300,
-            height: 1,
-          ),
-        ),
-      ),
-      
+
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   elevation: 0,
+      //   foregroundColor: Colors.black,
+      //   title: const Text('Login'),
+      //   centerTitle: true,
+      //   bottom: PreferredSize(
+      //     preferredSize: const Size.fromHeight(1),
+      //     child: Container(
+      //       color: Colors.grey.shade300,
+      //       height: 1,
+      //     ),
+      //   ),
+      // ),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -88,7 +88,10 @@ class LoginScreen extends StatelessWidget {
                         developer.log('Login button pressed');
                         context.go('/home');
                       },
-                      child: const Text('Login', style: TextStyle(fontSize: 16)),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -103,9 +106,12 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        context.go('/register');
+                        context.push('/register');
                       },
-                      child: const Text('Sign Up', style: TextStyle(fontSize: 16)),
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
                   ),
                 ],

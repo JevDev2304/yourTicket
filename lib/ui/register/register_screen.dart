@@ -11,40 +11,56 @@ class RegisterScreen extends StatelessWidget {
     final primary = theme.primaryColor;
 
     InputDecoration inputStyle(String label) => InputDecoration(
-          labelText: label,
-          labelStyle: const TextStyle(color: Colors.black87),
-          floatingLabelStyle: TextStyle(color: primary),
-          filled: true,
-          fillColor: Colors.white,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: Colors.grey.shade300),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: primary, width: 1.5),
-          ),
-        );
+      labelText: label,
+      labelStyle: const TextStyle(color: Colors.black87),
+      floatingLabelStyle: TextStyle(color: primary),
+      filled: true,
+      fillColor: Colors.white,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: Colors.grey.shade300),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: primary, width: 1.5),
+      ),
+    );
 
     return Scaffold(
       backgroundColor: Colors.white,
+      extendBodyBehindAppBar: true,
+
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: Colors.black,
-        title: const Text('Register'),
-        centerTitle: true,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(
-            color: Colors.grey.shade300,
-            height: 1,
+        leading: Container(
+          margin: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
+          child: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => context.pop(),
           ),
         ),
       ),
 
-
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   elevation: 0,
+      //   foregroundColor: Colors.black,
+      //   title: const Text('Register'),
+      //   centerTitle: true,
+      //   bottom: PreferredSize(
+      //     preferredSize: const Size.fromHeight(1),
+      //     child: Container(
+      //       color: Colors.grey.shade300,
+      //       height: 1,
+      //     ),
+      //   ),
+      // ),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -63,13 +79,11 @@ class RegisterScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 30),
-              TextFormField(
-                decoration: inputStyle('Username'),
-              ),
+              const Text('Alredy have an account?'),
+              const SizedBox(height: 15),
+              TextFormField(decoration: inputStyle('Username')),
               const SizedBox(height: 20),
-              TextFormField(
-                decoration: inputStyle('Full Name'),
-              ),
+              TextFormField(decoration: inputStyle('Full Name')),
               const SizedBox(height: 20),
               TextFormField(
                 obscureText: true,
