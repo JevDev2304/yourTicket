@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tickets_app/ui/categories/categories_screen.dart';
+import 'package:tickets_app/ui/detail/detail_screen.dart';
 import 'package:tickets_app/ui/home/home_screen.dart';
 import 'package:tickets_app/ui/my_purchases/my_purchases_page.dart';
 import 'package:tickets_app/ui/navigation/widgets/main_scaffold.dart';
@@ -40,13 +41,6 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
-          path: '/payment',
-          name: 'payment',
-          builder: (BuildContext context, GoRouterState state) {
-            return PaymentPage();
-          },
-        ),
-        GoRoute(
           path: '/my_purchases',
           name: 'my_purchases',
           builder: (BuildContext context, GoRouterState state) {
@@ -75,12 +69,29 @@ final GoRouter router = GoRouter(
           },
         ),
 
+        GoRoute(
+          path: '/event/:id',
+          name: 'event',
+          builder: (BuildContext context, GoRouterState state) {
+            // final String? userId = state.pathParameters['id'];
+            return DetailScreen();
+          },
+          routes: [
+            GoRoute(
+              path: 'payment',
+              name: 'payment',
+              builder: (BuildContext context, GoRouterState state) {
+                return PaymentPage();
+              },
+            ),
+          ],
+        ),
         //GoRoute(
-        //path: '/profile/:id', // Define la ruta con el parámetro :id
+        //path: '/profile/:id',
         //name: 'profile',
         //builder: (BuildContext context, GoRouterState state) {
-        //final String? userId = state.pathParameters['id']; // Obtén el valor del parámetro 'id'
-        //return ProfileScreen(userId: userId); // Pasa el ID a tu ProfileScreen
+        //final String? userId = state.pathParameters['id'];
+        //return ProfileScreen(userId: userId);
         //},
         //),
       ],
