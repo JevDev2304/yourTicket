@@ -37,11 +37,7 @@ class DetailScreen extends StatelessWidget {
         onPressed:
             () => context.pushNamed(
               'payment',
-              pathParameters: {
-                'id':
-                    event.id
-                        .toString(), // make sure you're passing the correct ID
-              },
+              pathParameters: {'id': event.id.toString()},
             ),
       ),
       appBar: AppBar(

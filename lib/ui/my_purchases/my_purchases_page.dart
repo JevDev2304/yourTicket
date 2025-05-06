@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MyPurchasesPage extends StatelessWidget {
   const MyPurchasesPage({super.key});
@@ -26,6 +27,9 @@ class MyPurchasesPage extends StatelessWidget {
           final compra = compras[index];
           return Card(
             child: ListTile(
+              onTap: () {
+                context.push('/ticket/1');
+              },
               title: Text(compra['evento']!),
               subtitle: Text(
                 'Fecha: ${compra['fecha']!}\nCódigo: ${compra['codigo']!}',

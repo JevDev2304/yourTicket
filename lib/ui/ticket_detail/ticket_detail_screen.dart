@@ -35,11 +35,7 @@ class TicketDetailScreen extends StatelessWidget {
             () => context.pushNamed(
               //! TO DO: show a success message
               'payment',
-              pathParameters: {
-                'id':
-                    ticket.id
-                        .toString(), // make sure you're passing the correct ID
-              },
+              pathParameters: {'id': ticket.id.toString()},
             ),
       ),
       appBar: AppBar(
