@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tickets_app/domain/model/event.dart';
+import 'package:tickets_app/theme/colors.dart';
 import 'package:tickets_app/ui/home/widgets/event_item.dart';
 import 'package:tickets_app/ui/home/widgets/search_bar_events.dart';
 
@@ -33,11 +35,40 @@ class HomeScreen extends StatelessWidget {
                   Icon(
                     Icons.local_activity,
                     color: Theme.of(context).primaryColor,
-                    size: 48,
+                    size: 42,
                   ),
                   Text(
                     'YourTicket',
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+
+                      children: [
+                        GestureDetector(
+                          onTap: () => context.go('/profile'),
+                          child: SizedBox(
+                            height: 45,
+                            width: 45,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(128.0),
+                              child: Image.network(
+                                'https://lh3.googleusercontent.com/a/ACg8ocKaAtVYDGLnqUdxtudN9p-VYaCT5iDkxwlTpIdcb1GKa6MWcF9F=s288-c-no', // Reemplaza con el enlace de tu imagen
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Icon(
+                                    Icons.image_not_supported,
+                                    size: 50,
+                                    color: Colors.grey,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -48,11 +79,32 @@ class HomeScreen extends StatelessWidget {
               ),
               SizedBox(height: 30),
               SearchBarEvents(),
-              SizedBox(height: 50),
+              SizedBox(height: 20),
+              GestureDetector(
+                onTap: () => context.push('/categories'),
+                child: Row(
+                  spacing: 8,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Explore our categories',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: primarySwatch),
+                    ),
+                    Icon(
+                      Icons.keyboard_double_arrow_right,
+                      color: primarySwatch,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 30),
               Text(
                 'Best events for you',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
+              SizedBox(height: 5),
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
