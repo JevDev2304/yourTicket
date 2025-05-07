@@ -1,62 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tickets_app/domain/model/event.dart';
-import 'package:tickets_app/ui/widgets/tag.dart';
+import 'package:tickets_app/domain/model/ticket.dart';
 
 class TicketItem extends StatelessWidget {
-  const TicketItem({super.key, required this.event});
+  const TicketItem({super.key, required this.ticket});
 
-  final Event event;
+  final Ticket ticket;
 
   @override
   Widget build(BuildContext context) {
     String formattedDate =
-        '${event.date.month}/${event.date.day}/${event.date.year}';
+        '${ticket.date.month}/${ticket.date.day}/${ticket.date.year}';
 
     return GestureDetector(
       onTap: () {
-        context.push('/ticket/1');
+        context.push('/ticket/${ticket.id}');
       },
-      child: Container(
-        height: 180,
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Colors.grey[300]!),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
+      child: Card(
+        margin: const EdgeInsets.only(bottom: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 2,
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              width: 130,
-              height: 180,
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(12),
+              ),
               child: Image.network(
-                event.imageUrl,
+                ticket.imageUrl,
+                height: 140,
+                width: double.infinity,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey[300],
-                    child: Icon(
-                      Icons.image_not_supported,
-                      color: Colors.grey[600],
-                    ),
-                  );
-                },
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    event.name,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    ticket.name,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 4),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -72,19 +62,10 @@ class TicketItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 15),
-                  Tag(label: event.category),
-                  Expanded(child: Container()),
-
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Text(
-                      'See more...',
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
+                  const SizedBox(height: 4),
+                  Text(ticket.ticketHolderName),
+                  const SizedBox(height: 4),
+                  Text(ticket.type),
                 ],
               ),
             ),
