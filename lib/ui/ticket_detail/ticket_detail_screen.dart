@@ -33,9 +33,7 @@ class TicketDetailScreen extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: BottomActionButton(
         label: 'Download PDF',
-        onPressed:
-            //! TO DO: show a success message
-            () => {},
+        onPressed: () => {},
       ),
       appBar: AppBar(
         backgroundColor: Colors.white,

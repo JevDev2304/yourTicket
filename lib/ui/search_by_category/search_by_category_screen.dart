@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tickets_app/domain/model/event.dart';
 import 'package:tickets_app/ui/home/widgets/event_item.dart';
-import 'package:tickets_app/ui/home/widgets/search_bar_events.dart';
 
-class SearchScreen extends StatelessWidget {
-  final String query;
+class SearchByCategoryScreen extends StatelessWidget {
+  final String category;
 
-  SearchScreen({super.key, required this.query});
+  SearchByCategoryScreen({super.key, required this.category});
 
   final List<Event> items = [
     Event(
@@ -25,7 +24,7 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Search'),
+        title: Text(category),
         // elevation: 0,
         leading: Container(
           margin: EdgeInsets.all(8),
@@ -40,17 +39,10 @@ class SearchScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 12.0),
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SearchBarEvents(),
-            SizedBox(height: 15),
-            Text(
-              "Showing results for '$query'",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            SizedBox(height: 45),
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),

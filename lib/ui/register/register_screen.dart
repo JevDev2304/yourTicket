@@ -79,8 +79,6 @@ class RegisterScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 30),
-              const Text('Alredy have an account?'),
-              const SizedBox(height: 15),
               TextFormField(decoration: inputStyle('Username')),
               const SizedBox(height: 20),
               TextFormField(decoration: inputStyle('Full Name')),

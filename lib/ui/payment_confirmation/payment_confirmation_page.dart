@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class PaymentConfirmationPage extends StatelessWidget {
   const PaymentConfirmationPage({super.key});
@@ -7,26 +8,26 @@ class PaymentConfirmationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF6F6F6),
-      appBar: AppBar(
-        title: const Text('Confirmación'),
-        backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
-        elevation: 0,
-      ),
+      // appBar: AppBar(
+      //   title: const Text('Confirmación'),
+      //   backgroundColor: Theme.of(context).primaryColor,
+      //   foregroundColor: Colors.white,
+      //   elevation: 0,
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.check_circle_rounded,
-                color: Colors.green, size: 100),
+            const Icon(
+              Icons.check_circle_rounded,
+              color: Colors.green,
+              size: 100,
+            ),
             const SizedBox(height: 20),
             const Text(
               '¡Pago exitoso!',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             const Text(
@@ -40,7 +41,8 @@ class PaymentConfirmationPage extends StatelessWidget {
             Card(
               elevation: 3,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: ListTile(
                 leading: const Icon(Icons.event, color: Colors.deepPurple),
                 title: const Text('Concierto Sinfónico - Medellín'),
@@ -57,6 +59,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                 ElevatedButton.icon(
                   icon: const Icon(Icons.home_outlined),
                   onPressed: () {
+                    context.go('/home');
                   },
                   label: const Text('Volver al inicio'),
                   style: ElevatedButton.styleFrom(
@@ -67,7 +70,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                 ElevatedButton.icon(
                   icon: const Icon(Icons.receipt_long_outlined),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/my_purchases');
+                    context.go('/my_purchases');
                   },
                   label: const Text('Mis compras'),
                   style: ElevatedButton.styleFrom(
@@ -80,6 +83,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                 OutlinedButton.icon(
                   icon: const Icon(Icons.person_outline),
                   onPressed: () {
+                    context.go('/profile');
                   },
                   label: const Text('Mi perfil'),
                   style: OutlinedButton.styleFrom(
@@ -88,7 +92,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

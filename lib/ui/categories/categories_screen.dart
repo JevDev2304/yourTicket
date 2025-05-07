@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tickets_app/ui/categories/widgets/category_widget.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -39,8 +40,6 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -53,10 +52,7 @@ class CategoriesScreen extends StatelessWidget {
         ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
-          child: Container(
-            height: 1,
-            color: Colors.grey.shade300,
-          ),
+          child: Container(height: 1, color: Colors.grey.shade300),
         ),
       ),
       backgroundColor: Colors.white,
@@ -74,7 +70,7 @@ class CategoriesScreen extends StatelessWidget {
           return InkWell(
             borderRadius: BorderRadius.circular(12),
             onTap: () {
-              // Aquí podrías navegar a una pantalla específica
+              context.push('/search_by_category?q=${category.name}');
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
@@ -119,7 +115,7 @@ class CategoriesScreen extends StatelessWidget {
                             blurRadius: 4,
                             color: Colors.black45,
                             offset: Offset(0, 1),
-                          )
+                          ),
                         ],
                       ),
                     ),

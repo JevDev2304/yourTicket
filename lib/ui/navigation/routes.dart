@@ -10,6 +10,8 @@ import 'package:tickets_app/ui/payment_confirmation/payment_confirmation_page.da
 import 'package:tickets_app/ui/login/login_screen.dart';
 import 'package:tickets_app/ui/profile/profile_screen.dart';
 import 'package:tickets_app/ui/register/register_screen.dart';
+import 'package:tickets_app/ui/search/search_screen.dart';
+import 'package:tickets_app/ui/search_by_category/search_by_category_screen.dart';
 import 'package:tickets_app/ui/ticket_detail/ticket_detail_screen.dart';
 
 final GoRouter router = GoRouter(
@@ -27,6 +29,62 @@ final GoRouter router = GoRouter(
       name: 'register',
       builder: (BuildContext context, GoRouterState state) {
         return const RegisterScreen();
+      },
+    ),
+    GoRoute(
+      path: '/confirmation',
+      name: 'confirmation',
+      builder: (BuildContext context, GoRouterState state) {
+        return PaymentConfirmationPage();
+      },
+    ),
+
+    GoRoute(
+      path: '/ticket/:id',
+      name: 'ticket',
+      builder: (BuildContext context, GoRouterState state) {
+        // final String? userId = state.pathParameters['id'];
+        return TicketDetailScreen();
+      },
+    ),
+    GoRoute(
+      path: '/categories',
+      name: 'categories',
+      builder: (BuildContext context, GoRouterState state) {
+        return CategoriesScreen();
+      },
+    ),
+    GoRoute(
+      path: '/event/:id',
+      name: 'event',
+      builder: (BuildContext context, GoRouterState state) {
+        // final String? userId = state.pathParameters['id'];
+        return DetailScreen();
+      },
+      routes: [
+        GoRoute(
+          path: 'payment',
+          name: 'payment',
+          builder: (BuildContext context, GoRouterState state) {
+            return PaymentPage();
+          },
+        ),
+      ],
+    ),
+    GoRoute(
+      path: '/search',
+      name: 'search',
+      builder: (context, state) {
+        final query = state.uri.queryParameters['q'] ?? '';
+        return SearchScreen(query: query);
+      },
+    ),
+    GoRoute(
+      path: '/search_by_category',
+      name: 'search_by_category',
+      builder: (context, state) {
+        final category = state.uri.queryParameters['q'] ?? '';
+        return SearchByCategoryScreen(category: category);
       },
     ),
     ShellRoute(
@@ -49,60 +107,12 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
-          path: '/ticket/:id',
-          name: 'ticket',
-          builder: (BuildContext context, GoRouterState state) {
-            // final String? userId = state.pathParameters['id'];
-            return TicketDetailScreen();
-          },
-        ),
-        GoRoute(
-          path: '/confirmation',
-          name: 'confirmation',
-          builder: (BuildContext context, GoRouterState state) {
-            return PaymentConfirmationPage();
-          },
-        ),
-        GoRoute(
-          path: '/categories',
-          name: 'categories',
-          builder: (BuildContext context, GoRouterState state) {
-            return CategoriesScreen();
-          },
-        ),
-        GoRoute(
           path: '/profile',
           name: 'profile',
           builder: (BuildContext context, GoRouterState state) {
             return ProfileScreen();
           },
         ),
-
-        GoRoute(
-          path: '/event/:id',
-          name: 'event',
-          builder: (BuildContext context, GoRouterState state) {
-            // final String? userId = state.pathParameters['id'];
-            return DetailScreen();
-          },
-          routes: [
-            GoRoute(
-              path: 'payment',
-              name: 'payment',
-              builder: (BuildContext context, GoRouterState state) {
-                return PaymentPage();
-              },
-            ),
-          ],
-        ),
-        //GoRoute(
-        //path: '/profile/:id',
-        //name: 'profile',
-        //builder: (BuildContext context, GoRouterState state) {
-        //final String? userId = state.pathParameters['id'];
-        //return ProfileScreen(userId: userId);
-        //},
-        //),
       ],
     ),
   ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class PaymentPage extends StatelessWidget {
   PaymentPage({super.key});
@@ -11,9 +12,9 @@ class PaymentPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Event Payment'),
-        backgroundColor: primaryColor,
-        foregroundColor: Colors.white,
+        title: const Text('Payment'),
+        backgroundColor: Colors.white,
+        // foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -26,7 +27,7 @@ class PaymentPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 image: const DecorationImage(
                   image: NetworkImage(
-                    'https://images.unsplash.com/photo-1558981009-15c203f1e273',
+                    'https://images.squarespace-cdn.com/content/v1/62502cbe020d59057d88d958/080907e5-94d6-491d-9c60-3d8099731559/patterns-by-angry-jalebi-62.jpg',
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -58,10 +59,7 @@ class PaymentPage extends StatelessWidget {
                     SizedBox(height: 4),
                     Text(
                       'May 25, 2025 • Main Theater',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(color: Colors.white70, fontSize: 14),
                     ),
                   ],
                 ),
@@ -88,7 +86,10 @@ class PaymentPage extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Payment Method',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -97,23 +98,34 @@ class PaymentPage extends StatelessWidget {
                       labelText: 'Select a payment method',
                     ),
                     items: const [
-                      DropdownMenuItem(value: 'credit_card', child: Text('Credit Card')),
-                      DropdownMenuItem(value: 'debit_card', child: Text('Debit Card')),
+                      DropdownMenuItem(
+                        value: 'credit_card',
+                        child: Text('Credit Card'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'debit_card',
+                        child: Text('Debit Card'),
+                      ),
                       DropdownMenuItem(value: 'pse', child: Text('PSE')),
                     ],
                     onChanged: (value) {},
                   ),
                   const SizedBox(height: 12),
-                  _buildInput('Card or Account Number', type: TextInputType.number),
+                  _buildInput(
+                    'Card or Account Number',
+                    type: TextInputType.number,
+                  ),
                   _buildInput('ZIP Code', type: TextInputType.number),
                   const SizedBox(height: 30),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          Navigator.pushNamed(context, '/confirmation');
-                        }
+                        context.go('/confirmation');
+                        // TODO this must be uncommented in the second phase of development
+                        // if (_formKey.currentState!.validate()) {
+                        //   Navigator.pushNamed(context, '/confirmation');
+                        // }
                       },
                       child: const Text('Confirm Payment'),
                     ),
@@ -133,7 +145,11 @@ class PaymentPage extends StatelessWidget {
       child: TextFormField(
         decoration: InputDecoration(labelText: label),
         keyboardType: type,
-        validator: (value) => value == null || value.isEmpty ? 'This field is required' : null,
+        validator:
+            (value) =>
+                value == null || value.isEmpty
+                    ? 'This field is required'
+                    : null,
       ),
     );
   }
