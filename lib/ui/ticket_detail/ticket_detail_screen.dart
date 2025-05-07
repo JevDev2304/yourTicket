@@ -81,9 +81,15 @@ class TicketDetailScreen extends StatelessWidget {
                                 child: Image.network(
                                   ticket.qrImageUrl,
                                   fit: BoxFit.contain,
-                                  errorBuilder:
-                                      (context, error, stackTrace) =>
-                                          const Icon(Icons.error),
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      color: Colors.grey[300],
+                                      child: Icon(
+                                        Icons.image_not_supported,
+                                        color: Colors.grey[600],
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                             ),

@@ -64,7 +64,19 @@ class DetailScreen extends StatelessWidget {
                 SizedBox(
                   height: 300,
                   width: double.infinity,
-                  child: Image.network(event.imageUrl, fit: BoxFit.cover),
+                  child: Image.network(
+                    event.imageUrl,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: Colors.grey[300],
+                        child: Icon(
+                          Icons.image_not_supported,
+                          color: Colors.grey[600],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -163,6 +175,15 @@ class DetailScreen extends StatelessWidget {
                             child: Image.network(
                               event.hostPictureUrl,
                               fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  color: Colors.grey[300],
+                                  child: Icon(
+                                    Icons.image_not_supported,
+                                    color: Colors.grey[600],
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ),
