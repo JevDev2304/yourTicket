@@ -17,6 +17,22 @@ class HomeScreen extends StatelessWidget {
       imageUrl:
           'https://images.squarespace-cdn.com/content/v1/62502cbe020d59057d88d958/080907e5-94d6-491d-9c60-3d8099731559/patterns-by-angry-jalebi-62.jpg',
     ),
+    Event(
+      id: 1,
+      name: 'Rock Concert',
+      category: 'Concert',
+      date: DateTime(2025, 5, 10),
+      imageUrl:
+          'https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?fit=crop&w=800&q=80',
+    ),
+    Event(
+      id: 2,
+      name: 'Theater Play',
+      category: 'Theater',
+      date: DateTime(2025, 6, 20),
+      imageUrl:
+          'https://images.unsplash.com/photo-1533236897111-3e94666b2edf?fit=crop&w=800&q=80',
+    ),
   ];
 
   @override
