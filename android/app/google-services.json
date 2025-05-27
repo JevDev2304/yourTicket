@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "328812749910",
+    "project_id": "yourticket-3f47d",
+    "storage_bucket": "yourticket-3f47d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328812749910:android:326ba1247cdcff403607f7",
+        "android_client_info": {
+          "package_name": "com.example.tickets_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc8eI2Xvl_-Sbl5vFFCw7f1pBym1q5OZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
