@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tickets_app/ui/categories/widgets/category_widget.dart';
+import 'package:tickets_app/ui/search/categories/widgets/category_widget.dart';
 
 class CategoriesScreen extends StatelessWidget {
   final List<Category> categories = [

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tickets_app/ui/categories/categories_screen.dart';
+import 'package:tickets_app/ui/search/categories/categories_screen.dart';
 import 'package:tickets_app/ui/detail/detail_screen.dart';
 import 'package:tickets_app/ui/home/home_screen.dart';
 import 'package:tickets_app/ui/my_purchases/my_purchases_page.dart';
 import 'package:tickets_app/ui/navigation/widgets/main_scaffold.dart';
 import 'package:tickets_app/ui/payment/payment_page.dart';
-import 'package:tickets_app/ui/payment_confirmation/payment_confirmation_page.dart';
-import 'package:tickets_app/ui/login/login_screen.dart';
+import 'package:tickets_app/ui/payment/payment_confirmation/payment_confirmation_page.dart';
+import 'package:tickets_app/ui/auth/login/login_screen.dart';
 import 'package:tickets_app/ui/profile/profile_screen.dart';
-import 'package:tickets_app/ui/register/register_screen.dart';
+import 'package:tickets_app/ui/auth/register/register_screen.dart';
 import 'package:tickets_app/ui/search/search_screen.dart';
-import 'package:tickets_app/ui/search_by_category/search_by_category_screen.dart';
-import 'package:tickets_app/ui/ticket_detail/ticket_detail_screen.dart';
+import 'package:tickets_app/ui/search/search_by_category/search_by_category_screen.dart';
+import 'package:tickets_app/ui/my_purchases/ticket_detail/ticket_detail_screen.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/login',
