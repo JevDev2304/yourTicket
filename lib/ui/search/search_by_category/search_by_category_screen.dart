@@ -8,16 +8,16 @@ class SearchByCategoryScreen extends StatelessWidget {
 
   SearchByCategoryScreen({super.key, required this.category});
 
-  final List<Event> items = [
-    Event(
-      date: DateTime(2025, 12, 12),
-      category: 'Concert',
-      id: 1,
-      name: 'Jazz all night long',
-      imageUrl:
-          'https://images.squarespace-cdn.com/content/v1/62502cbe020d59057d88d958/080907e5-94d6-491d-9c60-3d8099731559/patterns-by-angry-jalebi-62.jpg',
-    ),
-  ];
+  // final List<Event> items = [
+  //   Event(
+  //     date: DateTime(2025, 12, 12),
+  //     category: 'Concert',
+  //     id: 1,
+  //     name: 'Jazz all night long',
+  //     imageUrl:
+  //         'https://images.squarespace-cdn.com/content/v1/62502cbe020d59057d88d958/080907e5-94d6-491d-9c60-3d8099731559/patterns-by-angry-jalebi-62.jpg',
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -43,19 +43,19 @@ class SearchByCategoryScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 16,
-                  ), // similar a mainAxisSpacing
-                  child: EventItem(event: items[index]),
-                );
-              },
-            ),
+            // ListView.builder(
+            //   shrinkWrap: true,
+            //   physics: NeverScrollableScrollPhysics(),
+            //   itemCount: items.length,
+            //   itemBuilder: (context, index) {
+            //     return Padding(
+            //       padding: const EdgeInsets.only(
+            //         bottom: 16,
+            //       ), // similar a mainAxisSpacing
+            //       child: EventItem(event: items[index]),
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),
