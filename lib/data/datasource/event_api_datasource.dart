@@ -5,6 +5,7 @@ import 'package:tickets_app/domain/datasource/event_datasource.dart';
 import 'package:tickets_app/domain/model/category.dart';
 import 'package:tickets_app/domain/model/event.dart';
 import 'package:tickets_app/domain/model/event_detailed.dart';
+import 'package:tickets_app/domain/model/ticket_type.dart';
 
 class EventApiDatasource extends EventDatasource {
   @override
@@ -79,6 +80,12 @@ class EventApiDatasource extends EventDatasource {
   @override
   Future<EventDetailed?> fetchEventDetails(int id) async {
     // TODO: implement fetchEventDetails
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<TicketType>?> fetchEventTicketTypes(int eventId) {
+    // TODO: implement fetchEventTicketTypes
     throw UnimplementedError();
   }
 }
