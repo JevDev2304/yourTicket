@@ -6,11 +6,14 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        height: 60.0,
-        width: 60.0,
-        child: CircularProgressIndicator(color: primarySwatch),
+    return SizedBox(
+      height: 200,
+      child: Center(
+        child: SizedBox(
+          height: 60.0,
+          width: 60.0,
+          child: CircularProgressIndicator(color: primarySwatch),
+        ),
       ),
     );
   }

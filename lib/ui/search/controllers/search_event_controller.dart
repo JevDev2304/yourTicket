@@ -20,4 +20,14 @@ class SearchEventController extends StateNotifier<SearchEventState> {
       state = state.copyWith(isLoading: false, errorMessage: error.toString());
     }
   }
+
+  Future<void> getEventByCategory(String category) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      final listOfEvent = await eventRepository.getEventByCategory(category);
+      state = state.copyWith(isLoading: false, listOfEvent: listOfEvent);
+    } catch (error) {
+      state = state.copyWith(isLoading: false, errorMessage: error.toString());
+    }
+  }
 }

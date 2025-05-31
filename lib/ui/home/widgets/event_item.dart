@@ -27,6 +27,7 @@ class EventItem extends StatelessWidget {
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
               width: 130,
@@ -45,47 +46,49 @@ class EventItem extends StatelessWidget {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    event.name,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.calendar_today,
-                        size: 18,
-                        color: Colors.grey[600],
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        formattedDate,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 15),
-                  Tag(label: event.category),
-                  Expanded(child: Container()),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      event.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.calendar_today,
+                          size: 18,
+                          color: Colors.grey[600],
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          formattedDate,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 15),
+                    Tag(label: event.category),
+                    Expanded(child: Container()),
 
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Text(
-                      'See more...',
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: Theme.of(context).primaryColor,
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Text(
+                        'See more...',
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
