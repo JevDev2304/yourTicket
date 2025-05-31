@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tickets_app/controller/even_list_controller.dart';
 import 'package:tickets_app/controller/event_list_state.dart';
-import 'package:tickets_app/provider/event_repository_provider.dart';
+import 'package:tickets_app/provider/repository_provider.dart';
 
 final eventListControllerProvider =
     StateNotifierProvider<EventListController, EventListState>((ref) {

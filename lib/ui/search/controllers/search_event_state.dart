@@ -1,22 +1,22 @@
 import 'package:tickets_app/domain/model/event.dart';
 
-class EventListState {
+class SearchEventState {
   final List<Event> listOfEvent;
   final bool isLoading;
   final String? errorMessage;
 
-  EventListState({
+  SearchEventState({
     this.listOfEvent = const [],
     this.isLoading = false,
     this.errorMessage,
   });
 
-  EventListState copyWith({
+  SearchEventState copyWith({
     List<Event>? listOfEvent,
     bool? isLoading,
     String? errorMessage,
   }) {
-    return EventListState(
+    return SearchEventState(
       listOfEvent: listOfEvent ?? this.listOfEvent,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? this.errorMessage,

@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tickets_app/domain/model/event.dart';
 import 'package:tickets_app/ui/home/widgets/event_item.dart';
 import 'package:tickets_app/ui/home/widgets/search_bar_events.dart';
+import 'package:tickets_app/ui/search/providers/search_controller_provider.dart';
+import 'package:tickets_app/ui/widgets/empty_state.dart';
+import 'package:tickets_app/ui/widgets/error_state.dart';
+import 'package:tickets_app/ui/widgets/loading.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends ConsumerWidget {
   final String query;
 
-  SearchScreen({super.key, required this.query});
-
-  // final List<Event> items = [
-  //   Event(
-  //     date: DateTime(2025, 12, 12),
-  //     category: 'Concert',
-  //     id: 1,
-  //     name: 'Jazz all night long',
-  //     imageUrl:
-  //         'https://images.squarespace-cdn.com/content/v1/62502cbe020d59057d88d958/080907e5-94d6-491d-9c60-3d8099731559/patterns-by-angry-jalebi-62.jpg',
-  //   ),
-  // ];
+  const SearchScreen({super.key, required this.query});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final eventState = ref.watch(searchControllerProvider(query));
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -51,19 +46,25 @@ class SearchScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             SizedBox(height: 45),
-            // ListView.builder(
-            //   shrinkWrap: true,
-            //   physics: NeverScrollableScrollPhysics(),
-            //   itemCount: items.length,
-            //   itemBuilder: (context, index) {
-            //     return Padding(
-            //       padding: const EdgeInsets.only(
-            //         bottom: 16,
-            //       ), // similar a mainAxisSpacing
-            //       child: EventItem(event: items[index]),
-            //     );
-            //   },
-            // ),
+            eventState.isLoading
+                ? Loading()
+                : eventState.errorMessage != null
+                ? ErrorState(eventState.errorMessage!)
+                : eventState.listOfEvent.isEmpty
+                ? EmptyState()
+                : ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: eventState.listOfEvent.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 16,
+                      ), // similar a mainAxisSpacing
+                      child: EventItem(event: eventState.listOfEvent[index]),
+                    );
+                  },
+                ),
           ],
         ),
       ),

@@ -17,7 +17,7 @@ class EventListController extends StateNotifier<EventListState> {
       final listOfEvent = await eventRepository.getEventList();
       state = state.copyWith(isLoading: false, listOfEvent: listOfEvent);
     } catch (error) {
-      state = state.copyWith(isLoading: false);
+      state = state.copyWith(isLoading: false, errorMessage: error.toString());
     }
   }
 }

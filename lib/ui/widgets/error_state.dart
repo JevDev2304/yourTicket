@@ -4,11 +4,7 @@ class ErrorState extends StatelessWidget {
   final String message;
   final IconData icon;
 
-  const ErrorState({
-    super.key,
-    this.message = 'Something went wrong',
-    this.icon = Icons.error_outline,
-  });
+  const ErrorState(this.message, {super.key, this.icon = Icons.error_outline});
 
   @override
   Widget build(BuildContext context) {

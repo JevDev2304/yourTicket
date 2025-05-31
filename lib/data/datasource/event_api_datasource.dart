@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tickets_app/constants/app_constants.dart';
 import 'package:tickets_app/domain/datasource/event_datasource.dart';
+import 'package:tickets_app/domain/model/category.dart';
 import 'package:tickets_app/domain/model/event.dart';
+import 'package:tickets_app/domain/model/event_detailed.dart';
 
 class EventApiDatasource extends EventDatasource {
   @override
@@ -18,10 +20,65 @@ class EventApiDatasource extends EventDatasource {
             listOfJson.map((json) => Event.fromJson(json)).toList();
         return eventList;
       } else {
-        throw Exception('No existen eventos');
+        throw Exception('No results');
       }
     } catch (error) {
-      throw Exception('Ocurrió un error procesando los datos del API');
+      throw Exception('Something went wrong');
     }
+  }
+
+  @override
+  Future<List<Event>?> fetchEventByCategory(String category) async {
+    final url = Uri.https(
+      AppConstants.apiBaseUrl,
+      '/api/events/category/$category',
+    );
+
+    final response = await http.get(url);
+
+    try {
+      if (response.statusCode == 200) {
+        final List<dynamic> listOfJson = jsonDecode(response.body) as List;
+        final eventList =
+            listOfJson.map((json) => Event.fromJson(json)).toList();
+        return eventList;
+      } else {
+        throw Exception('No results');
+      }
+    } catch (error) {
+      throw Exception('Something went wrong');
+    }
+  }
+
+  @override
+  Future<List<Event>?> fetchEventByName(String name) async {
+    final url = Uri.https(AppConstants.apiBaseUrl, '/api/events/name/$name');
+
+    final response = await http.get(url);
+
+    try {
+      if (response.statusCode == 200) {
+        final List<dynamic> listOfJson = jsonDecode(response.body) as List;
+        final eventList =
+            listOfJson.map((json) => Event.fromJson(json)).toList();
+        return eventList;
+      } else {
+        throw Exception('No results');
+      }
+    } catch (error) {
+      throw Exception('Something went wrong');
+    }
+  }
+
+  @override
+  Future<List<Category>?> fetchEventCategories() async {
+    // TODO: implement fetchEventCategories
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<EventDetailed?> fetchEventDetails(int id) async {
+    // TODO: implement fetchEventDetails
+    throw UnimplementedError();
   }
 }
