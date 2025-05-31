@@ -47,20 +47,6 @@ class RegisterScreen extends StatelessWidget {
         ),
       ),
 
-      // appBar: AppBar(
-      //   backgroundColor: Colors.white,
-      //   elevation: 0,
-      //   foregroundColor: Colors.black,
-      //   title: const Text('Register'),
-      //   centerTitle: true,
-      //   bottom: PreferredSize(
-      //     preferredSize: const Size.fromHeight(1),
-      //     child: Container(
-      //       color: Colors.grey.shade300,
-      //       height: 1,
-      //     ),
-      //   ),
-      // ),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
