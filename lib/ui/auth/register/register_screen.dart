@@ -1,14 +1,76 @@
-import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tickets_app/ui/auth/providers/auth_controller_provider.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+  late TextEditingController usernameController;
+  late TextEditingController passwordController;
+  late TextEditingController confirmPasswordController;
+  late TextEditingController fullNameController;
+
+  @override
+  void initState() {
+    super.initState();
+    usernameController = TextEditingController();
+    passwordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
+    fullNameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    fullNameController.dispose();
+    super.dispose();
+  }
+
+  void _register() {
+    final username = usernameController.text.trim();
+    final password = passwordController.text.trim();
+    final confirmPassword = confirmPasswordController.text.trim();
+    final fullName = fullNameController.text.trim();
+
+    if (username.isEmpty ||
+        password.isEmpty ||
+        confirmPassword.isEmpty ||
+        fullName.isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please enter all fields')));
+      return;
+    }
+
+    ref
+        .read(authControllerProvider.notifier)
+        .createUser(fullName, username, password);
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final primary = theme.primaryColor;
+
+    final authState = ref.watch(authControllerProvider);
+
+    ref.listen<AsyncValue<void>>(authControllerProvider, (previous, next) {
+      next.whenOrNull(
+        data: (_) => context.go('/login'),
+        error:
+            (err, _) => ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Error: $err'))),
+      );
+    });
 
     InputDecoration inputStyle(String label) => InputDecoration(
       labelText: label,
@@ -65,18 +127,26 @@ class RegisterScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 30),
-              TextFormField(decoration: inputStyle('Username')),
+              TextFormField(
+                decoration: inputStyle('Username'),
+                controller: usernameController,
+              ),
               const SizedBox(height: 20),
-              TextFormField(decoration: inputStyle('Full Name')),
+              TextFormField(
+                decoration: inputStyle('Full Name'),
+                controller: fullNameController,
+              ),
               const SizedBox(height: 20),
               TextFormField(
                 obscureText: true,
                 decoration: inputStyle('Password'),
+                controller: passwordController,
               ),
               const SizedBox(height: 20),
               TextFormField(
                 obscureText: true,
                 decoration: inputStyle('Confirm Password'),
+                controller: confirmPasswordController,
               ),
               const SizedBox(height: 30),
               ElevatedButton(
@@ -88,9 +158,10 @@ class RegisterScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
+                statesController: WidgetStatesController(),
                 onPressed: () {
-                  developer.log('Register button pressed');
-                  context.go('/home');
+                  _register();
+                  // context.go('/home');
                 },
                 child: const Text('Register', style: TextStyle(fontSize: 16)),
               ),

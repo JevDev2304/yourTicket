@@ -12,9 +12,9 @@ class EventApiDatasource extends EventDatasource {
   Future<List<Event>?> fetchEventList() async {
     final url = Uri.https(AppConstants.apiBaseUrl, '/api/events/');
 
-    final response = await http.get(url);
-
     try {
+      final response = await http.get(url);
+
       if (response.statusCode == 200) {
         final List<dynamic> listOfJson = jsonDecode(response.body) as List;
         final eventList =
@@ -35,9 +35,9 @@ class EventApiDatasource extends EventDatasource {
       '/api/events/category/$category',
     );
 
-    final response = await http.get(url);
-
     try {
+      final response = await http.get(url);
+
       if (response.statusCode == 200) {
         final List<dynamic> listOfJson = jsonDecode(response.body) as List;
         final eventList =
@@ -55,9 +55,9 @@ class EventApiDatasource extends EventDatasource {
   Future<List<Event>?> fetchEventByName(String name) async {
     final url = Uri.https(AppConstants.apiBaseUrl, '/api/events/name/$name');
 
-    final response = await http.get(url);
-
     try {
+      final response = await http.get(url);
+
       if (response.statusCode == 200) {
         final List<dynamic> listOfJson = jsonDecode(response.body) as List;
         final eventList =
