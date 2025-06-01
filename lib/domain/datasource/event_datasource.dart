@@ -7,7 +7,7 @@ abstract class EventDatasource {
   Future<List<Event>?> fetchEventList();
   Future<List<Event>?> fetchEventByName(String name);
   Future<List<Event>?> fetchEventByCategory(String category);
-  Future<EventDetailed?> fetchEventDetails(int ticketId);
+  Future<EventDetailed?> fetchEventDetails(String ticketId);
   Future<List<Category>?> fetchEventCategories();
   Future<List<TicketType>?> fetchEventTicketTypes(int eventId);
 }

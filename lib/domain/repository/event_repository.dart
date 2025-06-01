@@ -20,7 +20,7 @@ class EventRepository {
     return _eventDatasource.fetchEventByCategory(category);
   }
 
-  Future<EventDetailed?> getEventDetails(int id) {
+  Future<EventDetailed?> getEventDetails(String id) {
     return _eventDatasource.fetchEventDetails(id);
   }
 

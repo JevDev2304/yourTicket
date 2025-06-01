@@ -78,7 +78,7 @@ class EventApiDatasource extends EventDatasource {
   }
 
   @override
-  Future<EventDetailed?> fetchEventDetails(int id) async {
+  Future<EventDetailed?> fetchEventDetails(String id) async {
     // TODO: implement fetchEventDetails
     throw UnimplementedError();
   }

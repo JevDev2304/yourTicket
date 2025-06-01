@@ -58,8 +58,8 @@ final GoRouter router = GoRouter(
       path: '/event/:id',
       name: 'event',
       builder: (BuildContext context, GoRouterState state) {
-        // final String? userId = state.pathParameters['id'];
-        return DetailScreen();
+        final String? id = state.pathParameters['id'];
+        return DetailScreen(eventId: id ?? '');
       },
       routes: [
         GoRoute(

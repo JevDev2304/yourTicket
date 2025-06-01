@@ -11,7 +11,7 @@ class EventDetailController extends StateNotifier<EventDetailState> {
   //   await getTicketDetail();
   // }
 
-  Future<void> getEventDetails(int id) async {
+  Future<void> getEventDetails(String id) async {
     state = state.copyWith(isLoading: true);
     try {
       final event = await eventRepository.getEventDetails(id);

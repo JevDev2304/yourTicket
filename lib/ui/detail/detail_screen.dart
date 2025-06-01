@@ -9,7 +9,7 @@ import 'package:tickets_app/ui/widgets/loading.dart';
 import 'package:tickets_app/ui/widgets/tag.dart';
 
 class DetailScreen extends ConsumerWidget {
-  final int eventId;
+  final String eventId;
 
   const DetailScreen({super.key, required this.eventId});
   //   : eventState.event! = EventDetailed(
