@@ -1,34 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tickets_app/domain/model/ticket_detailed.dart';
+import 'package:tickets_app/ui/my_purchases/providers/controller_ticket_provider.dart';
 import 'package:tickets_app/ui/widgets/bottom_action_button.dart';
+import 'package:tickets_app/ui/widgets/empty_state.dart';
+import 'package:tickets_app/ui/widgets/error_state.dart';
+import 'package:tickets_app/ui/widgets/loading.dart';
 import 'package:tickets_app/ui/widgets/tag.dart';
 
-class TicketDetailScreen extends StatelessWidget {
-  TicketDetailScreen({super.key})
-    : ticket = TicketDetailed(
-        id: 1,
-        name: 'Jazz all night long',
-        category: 'Concert',
-        qrImageUrl: 'https://api.qrserver.com/v1/create-qr-code/?data=FKS1235A',
-        date: DateTime(2025, 12, 12),
-        code: 'FKS1235A',
-        city: 'London, United Kingdom',
-        address: '42 Camden High Street',
-        type: 'VIP', // it may be early access, general, or VIP
-        purchasedOn: DateTime(2025, 05, 12),
-        ticketHolderName: 'Juan Valdés',
-      );
+class TicketDetailScreen extends ConsumerWidget {
+  final String ticketId;
 
-  final TicketDetailed ticket;
+  const TicketDetailScreen({required this.ticketId, super.key});
+  // : ticketState.ticket! = TicketDetailed(
+  //     id: 1,
+  //     name: 'Jazz all night long',
+  //     category: 'Concert',
+  //     qrImageUrl: 'https://api.qrserver.com/v1/create-qr-code/?data=FKS1235A',
+  //     date: DateTime(2025, 12, 12),
+  //     code: 'FKS1235A',
+  //     city: 'London, United Kingdom',
+  //     address: '42 Camden High Street',
+  //     type: 'VIP', // it may be early access, general, or VIP
+  //     purchasedOn: DateTime(2025, 05, 12),
+  //     ticketHolderName: 'Juan Valdés',
+  //   );
+
+  // final TicketDetailed ticketState.ticket!;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ticketState = ref.watch(ticketDetailControllerProvider(ticketId));
+
+    if (ticketState.ticket == null) {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Text('Ticket details'),
+          // elevation: 0,
+          leading: Container(
+            margin: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+            ),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () => context.pop(),
+            ),
+          ),
+        ),
+        body:
+            ticketState.isLoading
+                ? Loading()
+                : ticketState.errorMessage != null
+                ? ErrorState(ticketState.errorMessage!)
+                : EmptyState(),
+      );
+    }
+
     String formattedDate =
-        '${ticket.date.month}/${ticket.date.day}/${ticket.date.year}';
+        '${ticketState.ticket!.date.month}/${ticketState.ticket!.date.day}/${ticketState.ticket!.date.year}';
 
     String formattedDatePurchased =
-        '${ticket.purchasedOn.month}/${ticket.purchasedOn.day}/${ticket.purchasedOn.year}';
+        '${ticketState.ticket!.purchasedOn.month}/${ticketState.ticket!.purchasedOn.day}/${ticketState.ticket!.purchasedOn.year}';
 
     return Scaffold(
       bottomNavigationBar: BottomActionButton(
@@ -79,7 +114,7 @@ class TicketDetailScreen extends StatelessWidget {
                               child: AspectRatio(
                                 aspectRatio: 1,
                                 child: Image.network(
-                                  ticket.qrImageUrl,
+                                  ticketState.ticket!.qrImageUrl,
                                   fit: BoxFit.contain,
                                   errorBuilder: (context, error, stackTrace) {
                                     return Container(
@@ -94,21 +129,21 @@ class TicketDetailScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Text('Code: ${ticket.code}'),
+                          Text('Code: ${ticketState.ticket!.code}'),
                         ],
                       ),
                     ],
                   ),
                   SizedBox(height: 20),
                   Text(
-                    ticket.name,
+                    ticketState.ticket!.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   SizedBox(height: 5),
                   Text(
-                    ticket.city,
+                    ticketState.ticket!.city,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   SizedBox(height: 20),
@@ -127,7 +162,7 @@ class TicketDetailScreen extends StatelessWidget {
                             SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                ticket.address,
+                                ticketState.ticket!.address,
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                             ),
@@ -162,7 +197,7 @@ class TicketDetailScreen extends StatelessWidget {
                         'Category:',
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
-                      Tag(label: ticket.category),
+                      Tag(label: ticketState.ticket!.category),
                     ],
                   ),
                   SizedBox(height: 30),
@@ -177,7 +212,7 @@ class TicketDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your ticket',
+                          'Your ticketState.ticket!',
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         const SizedBox(height: 20),
@@ -199,7 +234,7 @@ class TicketDetailScreen extends StatelessWidget {
                             ),
                             Expanded(
                               child: Text(
-                                ticket.ticketHolderName,
+                                ticketState.ticket!.ticketHolderName,
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ),
@@ -224,7 +259,7 @@ class TicketDetailScreen extends StatelessWidget {
                             ),
                             Expanded(
                               child: Text(
-                                ticket.type,
+                                ticketState.ticket!.type,
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ),

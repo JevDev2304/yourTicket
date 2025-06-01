@@ -43,8 +43,8 @@ final GoRouter router = GoRouter(
       path: '/ticket/:id',
       name: 'ticket',
       builder: (BuildContext context, GoRouterState state) {
-        // final String? userId = state.pathParameters['id'];
-        return TicketDetailScreen();
+        final String? ticketId = state.pathParameters['id'];
+        return TicketDetailScreen(ticketId: ticketId ?? '');
       },
     ),
     GoRoute(
