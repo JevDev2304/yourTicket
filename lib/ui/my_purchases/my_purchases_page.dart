@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tickets_app/ui/my_purchases/providers/controller_ticket_provider.dart';
@@ -32,7 +33,8 @@ class MyPurchasesPage extends ConsumerWidget {
     //   ),
     // ];
 
-    final ticketListState = ref.watch(ticketControllerProvider);
+    User user = FirebaseAuth.instance.currentUser!;
+    final ticketListState = ref.watch(ticketControllerProvider(user.email!));
 
     return Scaffold(
       appBar: AppBar(

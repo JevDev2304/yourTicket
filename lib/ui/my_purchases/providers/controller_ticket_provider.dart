@@ -6,11 +6,13 @@ import 'package:tickets_app/ui/my_purchases/controllers/ticket_detail_state.dart
 import 'package:tickets_app/ui/my_purchases/controllers/ticket_state_controller.dart';
 
 final ticketControllerProvider =
-    StateNotifierProvider<TicketController, TicketState>((ref) {
+    StateNotifierProvider.family<TicketController, TicketState, String>((
+      ref,
+      email,
+    ) {
       final ticketRepository = ref.watch(ticketApiRepositoryProvider);
-      final ticketListController = TicketController(ticketRepository);
-      ticketListController.initialize();
-      return ticketListController;
+      final ticketController = TicketController(ticketRepository);
+      return ticketController..getTicketList(email);
     });
 
 final ticketDetailControllerProvider = StateNotifierProvider.family<
