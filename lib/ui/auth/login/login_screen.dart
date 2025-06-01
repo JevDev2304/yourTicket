@@ -1,14 +1,61 @@
-import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tickets_app/ui/auth/providers/auth_controller_provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  void _login() {
+    final username = emailController.text.trim();
+    final password = passwordController.text.trim();
+
+    if (username.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please enter all fields')));
+      return;
+    }
+
+    ref.read(authControllerProvider.notifier).login(username, password);
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final primary = theme.primaryColor;
+
+    ref.listen<AsyncValue<void>>(authControllerProvider, (previous, next) {
+      next.whenOrNull(
+        data: (_) => context.go('/home'),
+        error:
+            (err, _) => ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Error: $err'))),
+      );
+    });
 
     InputDecoration inputStyle(String label) => InputDecoration(
       labelText: label,
@@ -29,21 +76,6 @@ class LoginScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-
-      // appBar: AppBar(
-      //   backgroundColor: Colors.white,
-      //   elevation: 0,
-      //   foregroundColor: Colors.black,
-      //   title: const Text('Login'),
-      //   centerTitle: true,
-      //   bottom: PreferredSize(
-      //     preferredSize: const Size.fromHeight(1),
-      //     child: Container(
-      //       color: Colors.grey.shade300,
-      //       height: 1,
-      //     ),
-      //   ),
-      // ),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -63,13 +95,15 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               TextFormField(
-                keyboardType: TextInputType.text,
-                decoration: inputStyle('Username'),
+                keyboardType: TextInputType.emailAddress,
+                decoration: inputStyle('Email'),
+                controller: emailController,
               ),
               const SizedBox(height: 20),
               TextFormField(
                 obscureText: true,
                 decoration: inputStyle('Password'),
+                controller: passwordController,
               ),
               const SizedBox(height: 30),
               Row(
@@ -85,8 +119,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        developer.log('Login button pressed');
-                        context.go('/home');
+                        _login();
                       },
                       child: const Text(
                         'Login',

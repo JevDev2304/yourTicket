@@ -6,11 +6,11 @@ class ProfileRepository {
 
   ProfileRepository(this._profileDatasource);
 
-  Future<void> createUser(String fullName, String username, String password) {
-    return _profileDatasource.createUser(fullName, username, password);
+  Future<void> createUser(String fullName, String email, String password) {
+    return _profileDatasource.createUser(fullName, email, password);
   }
 
-  Future<Profile?> getProfile(String username) {
-    return _profileDatasource.fetchProfile(username);
+  Future<Profile?> getProfile(String email) {
+    return _profileDatasource.fetchProfile(email);
   }
 }

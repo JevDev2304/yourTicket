@@ -7,11 +7,11 @@ class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _RegisterScreenState();
+  ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
-  late TextEditingController usernameController;
+  late TextEditingController emailController;
   late TextEditingController passwordController;
   late TextEditingController confirmPasswordController;
   late TextEditingController fullNameController;
@@ -19,7 +19,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   @override
   void initState() {
     super.initState();
-    usernameController = TextEditingController();
+    emailController = TextEditingController();
     passwordController = TextEditingController();
     confirmPasswordController = TextEditingController();
     fullNameController = TextEditingController();
@@ -27,7 +27,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   @override
   void dispose() {
-    usernameController.dispose();
+    emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
     fullNameController.dispose();
@@ -35,7 +35,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   }
 
   void _register() {
-    final username = usernameController.text.trim();
+    final username = emailController.text.trim();
     final password = passwordController.text.trim();
     final confirmPassword = confirmPasswordController.text.trim();
     final fullName = fullNameController.text.trim();
@@ -60,7 +60,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     final theme = Theme.of(context);
     final primary = theme.primaryColor;
 
-    final authState = ref.watch(authControllerProvider);
+    // Queda pendiente colocar un loader en el botón, para eso el watch
+    // final authState = ref.watch(authControllerProvider);
 
     ref.listen<AsyncValue<void>>(authControllerProvider, (previous, next) {
       next.whenOrNull(
@@ -128,8 +129,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               ),
               const SizedBox(height: 30),
               TextFormField(
-                decoration: inputStyle('Username'),
-                controller: usernameController,
+                decoration: inputStyle('Email'),
+                keyboardType: TextInputType.emailAddress,
+                controller: emailController,
               ),
               const SizedBox(height: 20),
               TextFormField(

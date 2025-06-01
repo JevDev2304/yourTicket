@@ -7,14 +7,14 @@ class TicketController extends StateNotifier<TicketState> {
 
   TicketController(this.ticketRepository) : super(TicketState());
 
-  Future<void> initialize() async {
-    await getTicketList();
-  }
+  // Future<void> initialize() async {
+  //   await getTicketList();
+  // }
 
-  Future<void> getTicketList() async {
+  Future<void> getTicketList(String email) async {
     state = state.copyWith(isLoading: true);
     try {
-      final listOfTickets = await ticketRepository.getUserTickets('');
+      final listOfTickets = await ticketRepository.getUserTickets(email);
       state = state.copyWith(isLoading: false, listOfTickets: listOfTickets);
     } catch (error) {
       state = state.copyWith(isLoading: false, errorMessage: error.toString());

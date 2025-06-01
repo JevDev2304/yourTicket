@@ -9,13 +9,13 @@ class ProfileApiDatasource extends ProfileDatasource {
   @override
   Future<void> createUser(
     String fullName,
-    String username,
+    String email,
     String password,
   ) async {
     final url = Uri.https(AppConstants.apiBaseUrl, '/api/users');
 
     final body = {
-      'username': username,
+      'email': email,
       'fullName': fullName,
       'password': password,
       'profilePicture': '',
@@ -40,7 +40,7 @@ class ProfileApiDatasource extends ProfileDatasource {
   }
 
   @override
-  Future<Profile?> fetchProfile(String username) {
+  Future<Profile?> fetchProfile(String email) {
     // TODO: implement fetchProfile
     throw UnimplementedError();
   }

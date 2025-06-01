@@ -1,13 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tickets_app/ui/auth/providers/auth_controller_provider.dart';
+import 'package:tickets_app/ui/profile/provider/controller_profile_provider.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final primary = theme.primaryColor;
+
+    User user = FirebaseAuth.instance.currentUser!;
+    //! final profileState = ref.watch(profileControllerProvider(user.email!));
 
     return Scaffold(
       appBar: AppBar(
@@ -54,8 +61,8 @@ class ProfileScreen extends StatelessWidget {
             // Info Cards
             _buildInfoCard(
               icon: Icons.person_outline,
-              title: 'Username',
-              value: 'JevDev2304',
+              title: 'Email',
+              value: 'user.email!',
               context: context,
             ),
             const SizedBox(height: 16),
@@ -101,7 +108,8 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      context.go('/login');
+                      ref.read(authControllerProvider.notifier).logout();
+                      context.push('/login');
                     },
                   ),
                 ),
