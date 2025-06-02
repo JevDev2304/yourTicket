@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tickets_app/domain/model/event_detailed.dart';
 import 'package:tickets_app/ui/search/categories/categories_screen.dart';
 import 'package:tickets_app/ui/detail/detail_screen.dart';
 import 'package:tickets_app/ui/home/home_screen.dart';
@@ -66,7 +67,8 @@ final GoRouter router = GoRouter(
           path: 'payment',
           name: 'payment',
           builder: (BuildContext context, GoRouterState state) {
-            return PaymentPage();
+            final detail = state.extra as EventDetailed;
+            return PaymentPage(detail);
           },
         ),
       ],

@@ -14,7 +14,7 @@ class ProfileScreen extends ConsumerWidget {
     final primary = theme.primaryColor;
 
     User user = FirebaseAuth.instance.currentUser!;
-    //! final profileState = ref.watch(profileControllerProvider(user.email!));
+    final profileState = ref.watch(profileControllerProvider(user.email!));
 
     return Scaffold(
       appBar: AppBar(

@@ -15,7 +15,7 @@ class TicketRepository {
     return _ticketDatasource.fetchTicketDetail(id);
   }
 
-  Future<void> payment() {
-    return _ticketDatasource.payment();
+  Future<void> payment(String email, String eventId, String ticketType) {
+    return _ticketDatasource.payment(email, eventId, ticketType);
   }
 }

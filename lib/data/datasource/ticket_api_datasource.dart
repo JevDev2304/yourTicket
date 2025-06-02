@@ -16,7 +16,7 @@ class TicketApiDatasource extends TicketDatasource {
   }
 
   @override
-  Future<void> payment() {
+  Future<void> payment(String email, String eventId, String ticketType) {
     // TODO: implement payment
     throw UnimplementedError();
   }

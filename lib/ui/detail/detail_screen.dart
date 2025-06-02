@@ -69,11 +69,11 @@ class DetailScreen extends ConsumerWidget {
       bottomNavigationBar: BottomActionButton(
         // label: 'Buy  |  \$${eventState.event!.price} / person',
         label: 'Buy tickets',
-        onPressed:
-            () => context.pushNamed(
-              'payment',
-              pathParameters: {'id': eventState.event!.id.toString()},
-            ),
+        onPressed: () => context.push('/payment', extra: eventState.event),
+        // () => context.pushNamed(
+        //   'payment',
+        //   pathParameters: {'id': eventState.event!.id.toString()},
+        // ),
       ),
       appBar: AppBar(
         backgroundColor: Colors.transparent,

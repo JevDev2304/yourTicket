@@ -20,4 +20,14 @@ class TicketController extends StateNotifier<TicketState> {
       state = state.copyWith(isLoading: false, errorMessage: error.toString());
     }
   }
+
+  Future<void> payment(String email, String eventId, String ticketType) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      await ticketRepository.payment(email, eventId, ticketType);
+      await getTicketList(email);
+    } catch (error) {
+      state = state.copyWith(isLoading: false, errorMessage: error.toString());
+    }
+  }
 }

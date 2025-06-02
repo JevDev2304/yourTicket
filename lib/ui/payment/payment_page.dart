@@ -1,33 +1,82 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tickets_app/domain/model/event.dart';
+import 'package:tickets_app/domain/model/event_detailed.dart';
+import 'package:tickets_app/ui/my_purchases/controllers/ticket_state_controller.dart';
+import 'package:tickets_app/ui/my_purchases/providers/controller_ticket_provider.dart';
 
-class PaymentPage extends StatelessWidget {
-  PaymentPage({super.key});
+class PaymentPage extends ConsumerStatefulWidget {
+  final EventDetailed event;
 
+  const PaymentPage(this.event, {super.key});
+
+  @override
+  ConsumerState<PaymentPage> createState() => _PaymentPageState();
+}
+
+class _PaymentPageState extends ConsumerState<PaymentPage> {
   final _formKey = GlobalKey<FormState>();
+
+  String? _ticketType;
+
+  void _pay(User user, EventDetailed event) {
+    if (_formKey.currentState!.validate()) {
+      if (_ticketType == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please select a ticket type')),
+        );
+        return;
+      }
+
+      // Simulate payment or pass _ticketType to your backend
+      // print('Selected ticket type: $_ticketType');
+
+      ref
+          .read(paymentControllerProvider.notifier)
+          .payment(user.email!, event.id.toString(), _ticketType!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
+    User user = FirebaseAuth.instance.currentUser!;
+
+    final EventDetailed event = widget.event;
+
+    ref.listen<TicketState>(paymentControllerProvider, (previous, next) {
+      if (!next.isLoading) {
+        if (next.errorMessage != null) {
+          context.go('/confirmation');
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error: ${next.errorMessage}')),
+          );
+        }
+      }
+    });
+
+    String formattedDate =
+        '${event.date.month}/${event.date.day}/${event.date.year}';
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Payment'),
         backgroundColor: Colors.white,
-        // foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Styled event ticket
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                image: const DecorationImage(
+                image: DecorationImage(
                   image: NetworkImage(
-                    'https://images.squarespace-cdn.com/content/v1/62502cbe020d59057d88d958/080907e5-94d6-491d-9c60-3d8099731559/patterns-by-angry-jalebi-62.jpg',
+                    event.imageUrl,
+                    // 'https://images.squarespace-cdn.com/content/v1/62502cbe020d59057d88d958/080907e5-94d6-491d-9c60-3d8099731559/patterns-by-angry-jalebi-62.jpg',
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -47,9 +96,9 @@ class PaymentPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      'Jazz Night at Main Theater',
+                      event.name,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -58,7 +107,7 @@ class PaymentPage extends StatelessWidget {
                     ),
                     SizedBox(height: 4),
                     Text(
-                      'May 25, 2025 • Main Theater',
+                      '$formattedDate • ${event.address}',
                       style: TextStyle(color: Colors.white70, fontSize: 14),
                     ),
                   ],
@@ -66,67 +115,44 @@ class PaymentPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-
             const Text(
-              'Customer Information',
+              'Select Ticket Type',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-
             Form(
               key: _formKey,
               child: Column(
                 children: [
-                  _buildInput('Full Name'),
-                  _buildInput('Email', type: TextInputType.emailAddress),
-                  _buildInput('Phone', type: TextInputType.phone),
-                  _buildInput('Address'),
-                  const SizedBox(height: 24),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Payment Method',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
                   DropdownButtonFormField<String>(
-                    decoration: const InputDecoration(
-                      labelText: 'Select a payment method',
-                    ),
+                    decoration: const InputDecoration(labelText: 'Ticket Type'),
                     items: const [
                       DropdownMenuItem(
-                        value: 'credit_card',
-                        child: Text('Credit Card'),
+                        value: 'general',
+                        child: Text('General Admission'),
                       ),
+                      DropdownMenuItem(value: 'vip', child: Text('VIP')),
                       DropdownMenuItem(
-                        value: 'debit_card',
-                        child: Text('Debit Card'),
+                        value: 'backstage',
+                        child: Text('Backstage Pass'),
                       ),
-                      DropdownMenuItem(value: 'pse', child: Text('PSE')),
                     ],
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      setState(() {
+                        _ticketType = value;
+                      });
+                    },
+                    validator:
+                        (value) =>
+                            value == null
+                                ? 'Please select a ticket type'
+                                : null,
                   ),
-                  const SizedBox(height: 12),
-                  _buildInput(
-                    'Card or Account Number',
-                    type: TextInputType.number,
-                  ),
-                  _buildInput('ZIP Code', type: TextInputType.number),
                   const SizedBox(height: 30),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
-                        context.go('/confirmation');
-                        // TODO this must be uncommented in the second phase of development
-                        // if (_formKey.currentState!.validate()) {
-                        //   Navigator.pushNamed(context, '/confirmation');
-                        // }
-                      },
+                      onPressed: () => _pay(user, event),
                       child: const Text('Confirm Payment'),
                     ),
                   ),
@@ -138,19 +164,17 @@ class PaymentPage extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildInput(String label, {TextInputType type = TextInputType.text}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: TextFormField(
-        decoration: InputDecoration(labelText: label),
-        keyboardType: type,
-        validator:
-            (value) =>
-                value == null || value.isEmpty
-                    ? 'This field is required'
-                    : null,
-      ),
-    );
-  }
 }
+
+// Widget _buildInput(String label, {TextInputType type = TextInputType.text}) {
+//   return Padding(
+//     padding: const EdgeInsets.symmetric(vertical: 8),
+//     child: TextFormField(
+//       decoration: InputDecoration(labelText: label),
+//       keyboardType: type,
+//       validator:
+//           (value) =>
+//               value == null || value.isEmpty ? 'This field is required' : null,
+//     ),
+//   );
+// }
