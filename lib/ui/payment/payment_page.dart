@@ -2,10 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tickets_app/domain/model/event.dart';
 import 'package:tickets_app/domain/model/event_detailed.dart';
 import 'package:tickets_app/ui/my_purchases/controllers/ticket_state_controller.dart';
 import 'package:tickets_app/ui/my_purchases/providers/controller_ticket_provider.dart';
+import 'package:tickets_app/ui/payment/provider/controller_provider.dart';
+import 'package:tickets_app/ui/widgets/bottom_action_button.dart';
+import 'package:tickets_app/ui/widgets/error_state.dart';
+import 'package:tickets_app/ui/widgets/loading.dart';
 
 class PaymentPage extends ConsumerStatefulWidget {
   final EventDetailed event;
@@ -44,6 +47,9 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     User user = FirebaseAuth.instance.currentUser!;
 
     final EventDetailed event = widget.event;
+    final ticketTypeState = ref.watch(
+      ticketTypeControllerProvider(event.id.toString()),
+    );
 
     ref.listen<TicketState>(paymentControllerProvider, (previous, next) {
       if (!next.isLoading) {
@@ -61,107 +67,148 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
         '${event.date.month}/${event.date.day}/${event.date.year}';
 
     return Scaffold(
+      bottomNavigationBar: BottomActionButton(
+        label: 'Start payment',
+        onPressed: () => _pay(user, event),
+      ),
       appBar: AppBar(
         title: const Text('Payment'),
         backgroundColor: Colors.white,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                image: DecorationImage(
-                  image: NetworkImage(
-                    event.imageUrl,
-                    // 'https://images.squarespace-cdn.com/content/v1/62502cbe020d59057d88d958/080907e5-94d6-491d-9c60-3d8099731559/patterns-by-angry-jalebi-62.jpg',
-                  ),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              height: 180,
-              child: Container(
+      body:
+          ticketTypeState.isLoading
+              ? Loading()
+              : ticketTypeState.errorMessage != null
+              ? ErrorState(ticketTypeState.errorMessage!)
+              : ticketTypeState.ticketType == null
+              ? ErrorState('Something went wrong, please try again later')
+              : SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  gradient: LinearGradient(
-                    colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                ),
-                alignment: Alignment.bottomLeft,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      event.name,
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            event.imageUrl,
+                            // 'https://images.squarespace-cdn.com/content/v1/62502cbe020d59057d88d958/080907e5-94d6-491d-9c60-3d8099731559/patterns-by-angry-jalebi-62.jpg',
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      height: 180,
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.transparent,
+                              Colors.black.withOpacity(0.7),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                        ),
+                        alignment: Alignment.bottomLeft,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              event.name,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                              '$formattedDate • ${event.address}',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    const Text(
+                      'Select Ticket Type',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 4),
-                    Text(
-                      '$formattedDate • ${event.address}',
-                      style: TextStyle(color: Colors.white70, fontSize: 14),
+                    const SizedBox(height: 10),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              labelText: 'Ticket Type',
+                            ),
+                            items: [
+                              DropdownMenuItem(
+                                value: '1',
+                                enabled: ticketTypeState.ticketType!.basic > 0,
+                                child: Text('General'),
+                              ),
+                              DropdownMenuItem(
+                                value: '2',
+                                enabled:
+                                    ticketTypeState.ticketType!.preferred > 0,
+                                child: Text('Preferential'),
+                              ),
+                              DropdownMenuItem(
+                                value: '3',
+                                enabled: ticketTypeState.ticketType!.vip > 0,
+                                child: Text('VIP'),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                _ticketType = value;
+                              });
+                            },
+                            validator:
+                                (value) =>
+                                    value == null
+                                        ? 'Please select a ticket type'
+                                        : null,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.grey[300]!),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [],
+                            ),
+                          ),
+                          // const SizedBox(height: 30),
+                          // SizedBox(
+                          //   width: double.infinity,
+                          //   child: ElevatedButton(
+                          //     onPressed: () => _pay(user, event),
+                          //     child: const Text('Confirm Payment'),
+                          //   ),
+                          // ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              'Select Ticket Type',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  DropdownButtonFormField<String>(
-                    decoration: const InputDecoration(labelText: 'Ticket Type'),
-                    items: const [
-                      DropdownMenuItem(
-                        value: 'general',
-                        child: Text('General Admission'),
-                      ),
-                      DropdownMenuItem(value: 'vip', child: Text('VIP')),
-                      DropdownMenuItem(
-                        value: 'backstage',
-                        child: Text('Backstage Pass'),
-                      ),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        _ticketType = value;
-                      });
-                    },
-                    validator:
-                        (value) =>
-                            value == null
-                                ? 'Please select a ticket type'
-                                : null,
-                  ),
-                  const SizedBox(height: 30),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () => _pay(user, event),
-                      child: const Text('Confirm Payment'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

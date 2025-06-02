@@ -24,7 +24,7 @@ class Event {
       id: json['id'],
       name: json['name'],
       location: json['location'],
-      category: json['category'],
+      category: json['category']['name'],
       host: json['host'],
       date: DateTime.parse(json['date']),
       description: json['description'],

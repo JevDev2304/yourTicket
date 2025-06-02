@@ -215,31 +215,31 @@ class TicketDetailScreen extends ConsumerWidget {
                           'Your ticketState.ticket!',
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
-                        const SizedBox(height: 20),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: Icon(Icons.person),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                'Ticket holder:',
-                                style: Theme.of(context).textTheme.bodyLarge
-                                    ?.copyWith(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                ticketState.ticket!.ticketHolderName,
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                            ),
-                          ],
-                        ),
+                        // const SizedBox(height: 20),
+                        // Row(
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     const SizedBox(
+                        //       height: 20,
+                        //       width: 20,
+                        //       child: Icon(Icons.person),
+                        //     ),
+                        //     const SizedBox(width: 10),
+                        //     Expanded(
+                        //       child: Text(
+                        //         'Ticket holder:',
+                        //         style: Theme.of(context).textTheme.bodyLarge
+                        //             ?.copyWith(fontWeight: FontWeight.bold),
+                        //       ),
+                        //     ),
+                        //     Expanded(
+                        //       child: Text(
+                        //         ticketState.ticket!.ticketHolderName,
+                        //         style: Theme.of(context).textTheme.bodyLarge,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         const SizedBox(height: 20),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,

@@ -15,7 +15,7 @@ class EventItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        context.push('/event/1');
+        context.push('/event/${event.id}');
       },
       child: Container(
         height: 180,

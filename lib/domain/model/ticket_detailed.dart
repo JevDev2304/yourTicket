@@ -9,7 +9,6 @@ class TicketDetailed {
   final String address;
   final String type;
   final DateTime purchasedOn;
-  final String ticketHolderName;
 
   TicketDetailed({
     required this.date,
@@ -22,6 +21,5 @@ class TicketDetailed {
     required this.address,
     required this.type,
     required this.purchasedOn,
-    required this.ticketHolderName,
   });
 }

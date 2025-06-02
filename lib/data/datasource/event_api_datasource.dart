@@ -79,8 +79,22 @@ class EventApiDatasource extends EventDatasource {
 
   @override
   Future<EventDetailed?> fetchEventDetails(String id) async {
-    // TODO: implement fetchEventDetails
-    throw UnimplementedError();
+    final url = Uri.https(AppConstants.apiBaseUrl, '/api/events/$id');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> json = jsonDecode(response.body);
+        final event = EventDetailed.fromJson(json);
+        // json.map((json) => Event.fromJson(json)).toList();
+        return event;
+      } else {
+        throw Exception('No results');
+      }
+    } catch (error) {
+      throw Exception('Something went wrong');
+    }
   }
 
   @override

@@ -126,11 +126,11 @@ class DetailScreen extends ConsumerWidget {
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                  SizedBox(height: 5),
-                  Text(
-                    eventState.event!.city,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
+                  // SizedBox(height: 5),
+                  // Text(
+                  //   eventState.event!.city,
+                  //   style: Theme.of(context).textTheme.bodyLarge,
+                  // ),
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

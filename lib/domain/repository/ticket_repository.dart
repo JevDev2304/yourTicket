@@ -1,5 +1,6 @@
 import 'package:tickets_app/domain/datasource/ticket_datasource.dart';
 import 'package:tickets_app/domain/model/ticket.dart';
+import 'package:tickets_app/domain/model/ticket_availability.dart';
 import 'package:tickets_app/domain/model/ticket_detailed.dart';
 
 class TicketRepository {
@@ -17,5 +18,9 @@ class TicketRepository {
 
   Future<void> payment(String email, String eventId, String ticketType) {
     return _ticketDatasource.payment(email, eventId, ticketType);
+  }
+
+  Future<TicketAvailability?> getTicketAvailability(String eventId) {
+    return _ticketDatasource.fetchTicketAvailability(eventId);
   }
 }
