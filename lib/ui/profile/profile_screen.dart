@@ -15,7 +15,29 @@ class ProfileScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final primary = theme.primaryColor;
 
-    User user = FirebaseAuth.instance.currentUser!;
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          foregroundColor: Colors.black,
+          centerTitle: true,
+          title: const Text(
+            'Profile',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(1),
+            child: Container(color: Colors.grey.shade300, height: 1),
+          ),
+        ),
+        backgroundColor: Colors.white,
+        body: ErrorState('Something went wrong. Please try again later'),
+      );
+    }
+
     final profileState = ref.watch(profileControllerProvider(user.email!));
 
     return Scaffold(
