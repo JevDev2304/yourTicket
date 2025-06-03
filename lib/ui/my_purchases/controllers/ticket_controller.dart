@@ -7,9 +7,9 @@ class TicketController extends StateNotifier<TicketState> {
 
   TicketController(this.ticketRepository) : super(TicketState());
 
-  // Future<void> initialize() async {
-  //   await getTicketList();
-  // }
+  Future<void> reset(String email) async {
+    await getTicketList(email);
+  }
 
   Future<void> getTicketList(String email) async {
     state = state.copyWith(isLoading: true);
@@ -22,9 +22,10 @@ class TicketController extends StateNotifier<TicketState> {
   }
 
   Future<void> payment(String email, String eventId, String ticketType) async {
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(isLoading: true, success: false);
     try {
       await ticketRepository.payment(email, eventId, ticketType);
+      state = state.copyWith(success: true);
       await getTicketList(email);
     } catch (error) {
       state = state.copyWith(isLoading: false, errorMessage: error.toString());

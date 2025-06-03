@@ -36,7 +36,8 @@ final GoRouter router = GoRouter(
       path: '/confirmation',
       name: 'confirmation',
       builder: (BuildContext context, GoRouterState state) {
-        return PaymentConfirmationPage();
+        final detail = state.extra as EventDetailed;
+        return PaymentConfirmationPage(event: detail);
       },
     ),
 

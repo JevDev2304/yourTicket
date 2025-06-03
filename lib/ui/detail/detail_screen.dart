@@ -66,10 +66,16 @@ class DetailScreen extends ConsumerWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
+
       bottomNavigationBar: BottomActionButton(
         // label: 'Buy  |  \$${eventState.event!.price} / person',
         label: 'Buy tickets',
-        onPressed: () => context.push('/payment', extra: eventState.event),
+        onPressed:
+            () => context.pushNamed(
+              'payment',
+              pathParameters: {'id': eventState.event!.id.toString()},
+              extra: eventState.event,
+            ),
         // () => context.pushNamed(
         //   'payment',
         //   pathParameters: {'id': eventState.event!.id.toString()},

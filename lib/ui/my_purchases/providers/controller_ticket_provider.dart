@@ -15,6 +15,13 @@ final ticketControllerProvider =
       return ticketController..getTicketList(email);
     });
 
+// final resetTicketControllerProvider =
+//     StateNotifierProvider<TicketController, TicketState>((ref) {
+//       final ticketRepository = ref.watch(ticketApiRepositoryProvider);
+//       final ticketController = TicketController(ticketRepository);
+//       return ticketController;
+//     });
+
 final paymentControllerProvider =
     StateNotifierProvider<TicketController, TicketState>((ref) {
       final repository = ref.watch(ticketApiRepositoryProvider);

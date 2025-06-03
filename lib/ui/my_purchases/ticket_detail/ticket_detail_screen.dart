@@ -66,10 +66,10 @@ class TicketDetailScreen extends ConsumerWidget {
         '${ticketState.ticket!.purchasedOn.month}/${ticketState.ticket!.purchasedOn.day}/${ticketState.ticket!.purchasedOn.year}';
 
     return Scaffold(
-      bottomNavigationBar: BottomActionButton(
-        label: 'Download PDF',
-        onPressed: () => {},
-      ),
+      // bottomNavigationBar: BottomActionButton(
+      //   label: 'Download PDF',
+      //   onPressed: () => {},
+      // ),
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text('Ticket details'),
@@ -141,11 +141,11 @@ class TicketDetailScreen extends ConsumerWidget {
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                  SizedBox(height: 5),
-                  Text(
-                    ticketState.ticket!.city,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
+                  // SizedBox(height: 5),
+                  // Text(
+                  //   ticketState.ticket!.city,
+                  //   style: Theme.of(context).textTheme.bodyLarge,
+                  // ),
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -212,7 +212,7 @@ class TicketDetailScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your ticketState.ticket!',
+                          'Your ticket',
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         // const SizedBox(height: 20),

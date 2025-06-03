@@ -5,6 +5,6 @@ class Category {
   Category({required this.name, required this.imageUrl});
 
   factory Category.fromJson(Map<String, dynamic> json) {
-    return Category(name: json['name'], imageUrl: json['imageUrl']);
+    return Category(name: json['name'], imageUrl: json['image']);
   }
 }

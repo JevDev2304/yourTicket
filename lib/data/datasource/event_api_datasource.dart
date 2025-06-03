@@ -5,7 +5,6 @@ import 'package:tickets_app/domain/datasource/event_datasource.dart';
 import 'package:tickets_app/domain/model/category.dart';
 import 'package:tickets_app/domain/model/event.dart';
 import 'package:tickets_app/domain/model/event_detailed.dart';
-import 'package:tickets_app/domain/model/ticket_type.dart';
 
 class EventApiDatasource extends EventDatasource {
   @override
@@ -73,8 +72,22 @@ class EventApiDatasource extends EventDatasource {
 
   @override
   Future<List<Category>?> fetchEventCategories() async {
-    // TODO: implement fetchEventCategories
-    throw UnimplementedError();
+    final url = Uri.https(AppConstants.apiBaseUrl, '/api/categories/');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> listOfJson = jsonDecode(response.body) as List;
+        final categoryList =
+            listOfJson.map((json) => Category.fromJson(json)).toList();
+        return categoryList;
+      } else {
+        throw Exception('No results');
+      }
+    } catch (error) {
+      throw Exception('Something went wrong');
+    }
   }
 
   @override
@@ -95,11 +108,5 @@ class EventApiDatasource extends EventDatasource {
     } catch (error) {
       throw Exception('Something went wrong');
     }
-  }
-
-  @override
-  Future<List<TicketType>?> fetchEventTicketTypes(int eventId) {
-    // TODO: implement fetchEventTicketTypes
-    throw UnimplementedError();
   }
 }

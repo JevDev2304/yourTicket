@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tickets_app/ui/auth/providers/auth_controller_provider.dart';
 import 'package:tickets_app/ui/profile/provider/controller_profile_provider.dart';
+import 'package:tickets_app/ui/widgets/error_state.dart';
+import 'package:tickets_app/ui/widgets/loading.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -32,92 +34,104 @@ class ProfileScreen extends ConsumerWidget {
         ),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            // Avatar
-            CircleAvatar(
-              radius: 60,
-              backgroundColor: Colors.grey.shade200,
-              backgroundImage: const NetworkImage(
-                'https://lh3.googleusercontent.com/a/ACg8ocKaAtVYDGLnqUdxtudN9p-VYaCT5iDkxwlTpIdcb1GKa6MWcF9F=s288-c-no',
-              ),
-              onBackgroundImageError: (_, __) {},
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Juan Esteban Valdés Ospina',
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            Text('@JevDev2304', style: TextStyle(color: Colors.grey[600])),
-            const SizedBox(height: 32),
-
-            // Info Cards
-            _buildInfoCard(
-              icon: Icons.person_outline,
-              title: 'Email',
-              value: 'user.email!',
-              context: context,
-            ),
-            const SizedBox(height: 16),
-            _buildInfoCard(
-              icon: Icons.account_circle_outlined,
-              title: 'Full Name',
-              value: 'Juan Esteban Valdés Ospina',
-              context: context,
-            ),
-            const SizedBox(height: 32),
-
-            // Buttons
-            Row(
-              children: [
-                // Expanded(
-                //   child: ElevatedButton.icon(
-                //     icon: const Icon(Icons.lock_outline),
-                //     label: const Text('Change Password'),
-                //     style: ElevatedButton.styleFrom(
-                //       backgroundColor: primary,
-                //       foregroundColor: Colors.white,
-                //       padding: const EdgeInsets.symmetric(vertical: 14),
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(12),
-                //       ),
-                //     ),
-                //     onPressed: () {
-                //       developer.log('Change Password Pressed');
-                //     },
-                //   ),
-                // ),
-                // const SizedBox(width: 12),
-                Expanded(
-                  child: OutlinedButton.icon(
-                    icon: const Icon(Icons.logout),
-                    label: const Text('Logout'),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: primary,
-                      side: BorderSide(color: primary),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+      body:
+          profileState.isLoading
+              ? Loading()
+              : profileState.errorMessage != null
+              ? ErrorState(profileState.errorMessage!)
+              : profileState.profile == null
+              ? ErrorState('Something went wrong. Try again later')
+              : SingleChildScrollView(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  children: [
+                    // Avatar
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundColor: Colors.grey.shade200,
+                      backgroundImage: const NetworkImage(
+                        'https://lh3.googleusercontent.com/a/ACg8ocKaAtVYDGLnqUdxtudN9p-VYaCT5iDkxwlTpIdcb1GKa6MWcF9F=s288-c-no',
                       ),
+                      onBackgroundImageError: (_, __) {},
                     ),
-                    onPressed: () {
-                      ref.read(authControllerProvider.notifier).logout();
-                      context.push('/login');
-                    },
-                  ),
+                    const SizedBox(height: 16),
+                    Text(
+                      profileState.profile!.fullName,
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      profileState.profile!.username,
+                      style: TextStyle(color: Colors.grey[600]),
+                    ),
+                    const SizedBox(height: 32),
+
+                    // Info Cards
+                    _buildInfoCard(
+                      icon: Icons.person_outline,
+                      title: 'Email',
+                      value: profileState.profile!.username,
+                      context: context,
+                    ),
+                    const SizedBox(height: 16),
+                    _buildInfoCard(
+                      icon: Icons.account_circle_outlined,
+                      title: 'Full Name',
+                      value: profileState.profile!.fullName,
+                      context: context,
+                    ),
+                    const SizedBox(height: 32),
+
+                    // Buttons
+                    Row(
+                      children: [
+                        // Expanded(
+                        //   child: ElevatedButton.icon(
+                        //     icon: const Icon(Icons.lock_outline),
+                        //     label: const Text('Change Password'),
+                        //     style: ElevatedButton.styleFrom(
+                        //       backgroundColor: primary,
+                        //       foregroundColor: Colors.white,
+                        //       padding: const EdgeInsets.symmetric(vertical: 14),
+                        //       shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(12),
+                        //       ),
+                        //     ),
+                        //     onPressed: () {
+                        //       developer.log('Change Password Pressed');
+                        //     },
+                        //   ),
+                        // ),
+                        // const SizedBox(width: 12),
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            icon: const Icon(Icons.logout),
+                            label: const Text('Logout'),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: primary,
+                              side: BorderSide(color: primary),
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            onPressed: () {
+                              ref
+                                  .read(authControllerProvider.notifier)
+                                  .logout();
+                              context.push('/login');
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ],
-        ),
-      ),
+              ),
     );
   }
 

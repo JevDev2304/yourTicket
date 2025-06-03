@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tickets_app/ui/search/providers/search_controller_provider.dart';
+import 'package:tickets_app/ui/widgets/empty_state.dart';
+import 'package:tickets_app/ui/widgets/error_state.dart';
+import 'package:tickets_app/ui/widgets/loading.dart';
 
 class CategoriesScreen extends ConsumerWidget {
   // final List<Category> categories = [
@@ -59,76 +62,83 @@ class CategoriesScreen extends ConsumerWidget {
         ),
       ),
       backgroundColor: Colors.white,
-      body: GridView.builder(
-        padding: const EdgeInsets.all(16.0),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16.0,
-          mainAxisSpacing: 16.0,
-          childAspectRatio: 1.4,
-        ),
-        itemCount: categoriesState.listOfCategories.length,
-        itemBuilder: (context, index) {
-          final category = categoriesState.listOfCategories[index];
-          return InkWell(
-            borderRadius: BorderRadius.circular(12),
-            onTap: () {
-              context.push('/search_by_category?q=${category.name}');
-            },
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  // Imagen
-                  Image.network(
-                    category.imageUrl,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: Colors.grey.shade300,
-                        child: const Center(
-                          child: Icon(Icons.image_not_supported),
-                        ),
-                      );
+      body:
+          categoriesState.isLoading
+              ? Loading()
+              : categoriesState.errorMessage != null
+              ? ErrorState(categoriesState.errorMessage!)
+              : categoriesState.listOfCategories.isEmpty
+              ? EmptyState()
+              : GridView.builder(
+                padding: const EdgeInsets.all(16.0),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16.0,
+                  mainAxisSpacing: 16.0,
+                  childAspectRatio: 1.4,
+                ),
+                itemCount: categoriesState.listOfCategories.length,
+                itemBuilder: (context, index) {
+                  final category = categoriesState.listOfCategories[index];
+                  return InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: () {
+                      context.push('/search_by_category?q=${category.name}');
                     },
-                  ),
-                  // Gradiente y texto
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.transparent,
-                          Colors.black.withOpacity(0.7),
-                        ],
-                      ),
-                    ),
-                    padding: const EdgeInsets.all(12.0),
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      category.name,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 4,
-                            color: Colors.black45,
-                            offset: Offset(0, 1),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          // Imagen
+                          Image.network(
+                            category.imageUrl,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                color: Colors.grey.shade300,
+                                child: const Center(
+                                  child: Icon(Icons.image_not_supported),
+                                ),
+                              );
+                            },
+                          ),
+                          // Gradiente y texto
+                          Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.black.withOpacity(0.7),
+                                ],
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(12.0),
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              category.name,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 4,
+                                    color: Colors.black45,
+                                    offset: Offset(0, 1),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
-            ),
-          );
-        },
-      ),
     );
   }
 }

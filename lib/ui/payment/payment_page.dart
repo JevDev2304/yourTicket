@@ -24,6 +24,32 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
 
   String? _ticketType;
 
+  String _getTicketName(String? type) {
+    switch (type) {
+      case '1':
+        return 'General';
+      case '2':
+        return 'Preferential';
+      case '3':
+        return 'VIP';
+      default:
+        return 'No ticket selected';
+    }
+  }
+
+  int _getTicketPrice(String? type) {
+    switch (type) {
+      case '1':
+        return 20;
+      case '2':
+        return 50;
+      case '3':
+        return 100;
+      default:
+        return 0;
+    }
+  }
+
   void _pay(User user, EventDetailed event) {
     if (_formKey.currentState!.validate()) {
       if (_ticketType == null) {
@@ -52,14 +78,12 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     );
 
     ref.listen<TicketState>(paymentControllerProvider, (previous, next) {
-      if (!next.isLoading) {
-        if (next.errorMessage != null) {
-          context.go('/confirmation');
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: ${next.errorMessage}')),
-          );
-        }
+      if (next.success) {
+        context.go('/confirmation', extra: event);
+      } else if (next.errorMessage != null) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: ${next.errorMessage}')));
       }
     });
 
@@ -158,18 +182,24 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                               DropdownMenuItem(
                                 value: '1',
                                 enabled: ticketTypeState.ticketType!.basic > 0,
-                                child: Text('General'),
+                                child: Text(
+                                  'Tickets available: ${ticketTypeState.ticketType!.basic} - General',
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: '2',
                                 enabled:
                                     ticketTypeState.ticketType!.preferred > 0,
-                                child: Text('Preferential'),
+                                child: Text(
+                                  'Tickets available: ${ticketTypeState.ticketType!.preferred} - Preferential',
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: '3',
                                 enabled: ticketTypeState.ticketType!.vip > 0,
-                                child: Text('VIP'),
+                                child: Text(
+                                  'Tickets available: ${ticketTypeState.ticketType!.vip} - VIP',
+                                ),
                               ),
                             ],
                             onChanged: (value) {
@@ -183,18 +213,74 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                                         ? 'Please select a ticket type'
                                         : null,
                           ),
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey[300]!),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [],
-                            ),
-                          ),
+                          SizedBox(height: 20),
+                          _ticketType == null
+                              ? SizedBox.shrink()
+                              : Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: Colors.grey[300]!),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: 60,
+                                      height: 60,
+                                      child: Icon(
+                                        Icons.sell,
+                                        size: 42,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                    SizedBox(width: 15),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Buying: ',
+                                          style:
+                                              Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium,
+                                        ),
+                                        Text.rich(
+                                          TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text:
+                                                    '${_getTicketName(_ticketType)} ',
+                                                style:
+                                                    Theme.of(
+                                                      context,
+                                                    ).textTheme.headlineSmall,
+                                              ),
+                                              TextSpan(
+                                                text: 'ticket',
+                                                style:
+                                                    Theme.of(
+                                                      context,
+                                                    ).textTheme.bodyLarge,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          'Price: \$${_getTicketPrice(_ticketType)}',
+                                          style:
+                                              Theme.of(
+                                                context,
+                                              ).textTheme.bodyLarge,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                           // const SizedBox(height: 30),
                           // SizedBox(
                           //   width: double.infinity,

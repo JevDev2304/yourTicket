@@ -51,51 +51,55 @@ class TicketItem extends StatelessWidget {
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(Icons.sell, size: 18, color: Colors.grey[600]),
-                        SizedBox(width: 8),
-                        Text(
-                          'Ticket to:',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      ticket.name,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(Icons.sell, size: 18, color: Colors.grey[600]),
+                          SizedBox(width: 8),
+                          Text(
+                            'Ticket to:',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.calendar_today,
-                          size: 18,
-                          color: Colors.grey[600],
+                      SizedBox(height: 5),
+                      Text(
+                        ticket.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(width: 8),
-                        Text(
-                          formattedDate,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ],
-                    ),
-                    // const SizedBox(height: 4),
-                    // Text(ticket.ticketHolderName),
-                    const SizedBox(height: 4),
-                    Text(ticket.type),
-                  ],
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.calendar_today,
+                            size: 18,
+                            color: Colors.grey[600],
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            formattedDate,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ],
+                      ),
+                      // const SizedBox(height: 4),
+                      // Text(ticket.ticketHolderName),
+                      const SizedBox(height: 4),
+                      Text(ticket.type),
+                    ],
+                  ),
                 ),
               ),
             ],

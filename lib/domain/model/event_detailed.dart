@@ -38,4 +38,18 @@ class EventDetailed {
       address: json['location'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'date': date.toIso8601String(),
+      'category': {'name': category},
+      'id': id,
+      'name': name,
+      'description': description,
+      'image': imageUrl,
+      'host': host,
+      'host_image': hostPictureUrl,
+      'location': address,
+    };
+  }
 }

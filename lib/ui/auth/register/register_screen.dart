@@ -50,6 +50,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       return;
     }
 
+    if (confirmPassword != password) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Passwords don't match")));
+      return;
+    }
+
     ref
         .read(authControllerProvider.notifier)
         .createUser(fullName, username, password);

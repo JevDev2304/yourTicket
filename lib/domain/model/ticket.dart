@@ -1,5 +1,5 @@
 class Ticket {
-  final int id;
+  final String id;
   final String name;
   final String type;
   final DateTime date;
@@ -13,5 +13,13 @@ class Ticket {
     required this.imageUrl,
   });
 
-  // DateTime.parse(json['date']),
+  factory Ticket.fromJson(Map<String, dynamic> json) {
+    return Ticket(
+      id: json['id'],
+      name: json['event']['name'],
+      type: json['ticketTypeEntity']['name'],
+      date: DateTime.parse(json['event']['date']),
+      imageUrl: json['event']['image'],
+    );
+  }
 }

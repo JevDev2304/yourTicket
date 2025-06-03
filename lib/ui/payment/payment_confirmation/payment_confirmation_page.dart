@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tickets_app/domain/model/event_detailed.dart';
 
 class PaymentConfirmationPage extends StatelessWidget {
-  const PaymentConfirmationPage({super.key});
+  final EventDetailed event;
+  const PaymentConfirmationPage({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
+    String formattedDate =
+        '${event.date.month}/${event.date.day}/${event.date.year}';
+
     return Scaffold(
       backgroundColor: const Color(0xFFF6F6F6),
       // appBar: AppBar(
@@ -26,12 +31,12 @@ class PaymentConfirmationPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             const Text(
-              '¡Pago exitoso!',
+              'Payment successful!',
               style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             const Text(
-              'Tu entrada al evento ha sido confirmada.',
+              'We have sent to your email your ticket.',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16, color: Colors.black87),
             ),
@@ -45,8 +50,8 @@ class PaymentConfirmationPage extends StatelessWidget {
               ),
               child: ListTile(
                 leading: const Icon(Icons.event, color: Colors.deepPurple),
-                title: const Text('Concierto Sinfónico - Medellín'),
-                subtitle: const Text('25 de mayo, 2025 - Teatro Principal'),
+                title: Text(event.name),
+                subtitle: Text('$formattedDate - ${event.address}'),
               ),
             ),
 
@@ -61,7 +66,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                   onPressed: () {
                     context.go('/home');
                   },
-                  label: const Text('Volver al inicio'),
+                  label: const Text('Home page'),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
@@ -72,7 +77,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                   onPressed: () {
                     context.go('/my_purchases');
                   },
-                  label: const Text('Mis compras'),
+                  label: const Text('My purchases'),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     backgroundColor: Colors.grey[200],
@@ -85,7 +90,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                   onPressed: () {
                     context.go('/profile');
                   },
-                  label: const Text('Mi perfil'),
+                  label: const Text('My profile'),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     side: BorderSide(color: Colors.grey.shade400),

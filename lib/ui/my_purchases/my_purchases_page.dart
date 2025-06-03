@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tickets_app/ui/my_purchases/controllers/ticket_state_controller.dart';
 import 'package:tickets_app/ui/my_purchases/providers/controller_ticket_provider.dart';
 import 'package:tickets_app/ui/my_purchases/widgets/ticket_item.dart';
 import 'package:tickets_app/ui/widgets/empty_state.dart';
@@ -12,31 +13,20 @@ class MyPurchasesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final List<Ticket> purchases = [
-    //   Ticket(
-    //     id: 1,
-    //     name: 'Rock Concert',
-    //     type: 'VIP',
-    //     ticketHolderName: 'Laura García',
-    //     date: DateTime(2025, 5, 10),
-    //     imageUrl:
-    //         'https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?fit=crop&w=800&q=80',
-    //   ),
-    //   Ticket(
-    //     id: 2,
-    //     name: 'Theater Play',
-    //     type: 'General',
-    //     ticketHolderName: 'Laura García',
-    //     date: DateTime(2025, 6, 20),
-    //     imageUrl:
-    //         'https://images.unsplash.com/photo-1533236897111-3e94666b2edf?fit=crop&w=800&q=80',
-    //   ),
-    // ];
-
     User user = FirebaseAuth.instance.currentUser!;
     final ticketListState = ref.watch(ticketControllerProvider(user.email!));
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ref
+              .read(ticketControllerProvider(user.email!).notifier)
+              .reset(user.email!);
+        },
+        child: const Icon(Icons.refresh),
+        tooltip: 'Reset',
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,

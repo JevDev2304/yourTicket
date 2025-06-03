@@ -40,8 +40,21 @@ class ProfileApiDatasource extends ProfileDatasource {
   }
 
   @override
-  Future<Profile?> fetchProfile(String email) {
-    // TODO: implement fetchProfile
-    throw UnimplementedError();
+  Future<Profile?> fetchProfile(String email) async {
+    final url = Uri.https(AppConstants.apiBaseUrl, '/api/users/$email');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> json = jsonDecode(response.body);
+        final profile = Profile.fromJson(json);
+        return profile;
+      } else {
+        throw Exception('No results');
+      }
+    } catch (error) {
+      throw Exception('Something went wrong');
+    }
   }
 }
